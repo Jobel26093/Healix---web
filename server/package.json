@@ -1,0 +1,16 @@
+{
+  "name": "apex-erp-server",
+  "version": "1.0.0",
+  "description": "Express backend with RBAC and ERP engines for ApexERP",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node --watch src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^18.0.6",
+    "express": "^4.19.2",
+    "nodemailer": "^10.0.15"
+  }
+}

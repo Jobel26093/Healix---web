@@ -1,0 +1,1239 @@
+{
+  "activeUser": null,
+  "users": [
+    {
+      "id": "usr_admin_1",
+      "email": "calvinjoelc@gmail.com",
+      "username": "drcalvin",
+      "password": "1234",
+      "fullName": "Dr. Joel Calvin C (Lead Physio)",
+      "phone": "+91 73053 94549",
+      "role": "ADMIN",
+      "createdAt": "2026-10-01"
+    },
+    {
+      "id": "usr_pat_1",
+      "email": "john.doe@example.com",
+      "username": "johndoe",
+      "password": "HealthyPatient2026",
+      "fullName": "John Doe",
+      "phone": "+91 98765 43210",
+      "role": "USER",
+      "age": 34,
+      "gender": "Male",
+      "address": "742 Anna Salai, T. Nagar, Chennai, Tamil Nadu",
+      "medicalCondition": "Post-ACL Surgery Rehabilitation & Lower Back Stiffness",
+      "createdAt": "2026-10-02"
+    },
+    {
+      "id": "usr_pat_2",
+      "email": "sarah.smith@example.com",
+      "username": "sarahsmith",
+      "password": "userpassword123",
+      "fullName": "Sarah Smith",
+      "phone": "+91 91234 56789",
+      "role": "USER",
+      "age": 29,
+      "gender": "Female",
+      "address": "12 Mahatma Gandhi Road, Koramangala, Bengaluru, Karnataka",
+      "medicalCondition": "Cervical Spondylosis & Shoulder Impingement",
+      "createdAt": "2026-10-02"
+    },
+    {
+      "id": "usr_pat_1791298880726",
+      "email": "jobelcrefloc@gmail.com",
+      "username": "jobelcrefloc",
+      "password": "1234",
+      "fullName": "Jobel Creflo",
+      "phone": "+918122555002",
+      "role": "USER",
+      "age": 20,
+      "gender": "Male",
+      "address": "91, Eden Garden ,Sudhanantha Barathi Street,Ganapathipuram, East Tambaram, Chennai -600059",
+      "medicalCondition": "knee pain ",
+      "createdAt": "2026-10-06"
+    },
+    {
+      "id": "NURSE_1791474439287",
+      "fullName": "Pauline .T",
+      "email": "paulinecharles11995@gmail.com",
+      "username": "paulinecharles11995",
+      "password": "1234",
+      "role": "NURSE",
+      "phone": "+91 9171022305",
+      "shift": "Morning (08:00 AM - 02:00 PM)",
+      "status": "Resigned",
+      "supervisingDoctor": "Dr. Calvin Joel (Chief Physiotherapist)",
+      "createdAt": "2026-10-08T15:47:19.287Z",
+      "notes": "Newly onboarded clinic nurse by Medical Director. | Resigned on Oct 10, 2026. Access revoked.",
+      "resignedAt": "2026-10-10T13:44:20.836Z"
+    }
+  ],
+  "clinicTimings": [
+    {
+      "id": "slot-1",
+      "day": "Monday - Saturday",
+      "timeSlot": "09:00 AM - 10:00 AM",
+      "maxCapacity": 4,
+      "booked": 0,
+      "isAvailable": true
+    },
+    {
+      "id": "slot-2",
+      "day": "Monday - Saturday",
+      "timeSlot": "10:00 AM - 11:00 AM",
+      "maxCapacity": 4,
+      "booked": 1,
+      "isAvailable": true
+    },
+    {
+      "id": "slot-3",
+      "day": "Monday - Saturday",
+      "timeSlot": "11:00 AM - 12:00 PM",
+      "maxCapacity": 4,
+      "booked": 0,
+      "isAvailable": true
+    },
+    {
+      "id": "slot-4",
+      "day": "Monday - Saturday",
+      "timeSlot": "02:00 PM - 03:00 PM",
+      "maxCapacity": 4,
+      "booked": 0,
+      "isAvailable": true
+    },
+    {
+      "id": "slot-5",
+      "day": "Monday - Saturday",
+      "timeSlot": "03:00 PM - 04:00 PM",
+      "maxCapacity": 4,
+      "booked": 0,
+      "isAvailable": true
+    },
+    {
+      "id": "slot-6",
+      "day": "Monday - Saturday",
+      "timeSlot": "04:00 PM - 05:00 PM",
+      "maxCapacity": 4,
+      "booked": 1,
+      "isAvailable": true
+    },
+    {
+      "id": "slot-7",
+      "day": "Monday - Saturday",
+      "timeSlot": "05:00 PM - 06:00 PM (Evening Home Visits)",
+      "maxCapacity": 3,
+      "booked": 2,
+      "isAvailable": true
+    },
+    {
+      "id": "slot-8",
+      "day": "Monday - Saturday",
+      "timeSlot": "06:00 PM - 07:00 PM (Evening Home Visits)",
+      "maxCapacity": 3,
+      "booked": 0,
+      "isAvailable": true
+    }
+  ],
+  "services": [
+    {
+      "id": "srv-1",
+      "name": "Sports Injury Rehabilitation",
+      "duration": "45 Mins",
+      "price": 800,
+      "icon": "Activity"
+    },
+    {
+      "id": "srv-2",
+      "name": "Orthopedic Physiotherapy",
+      "duration": "60 Mins",
+      "price": 1000,
+      "icon": "Bone"
+    },
+    {
+      "id": "srv-3",
+      "name": "Neurological Rehabilitation",
+      "duration": "60 Mins",
+      "price": 1200,
+      "icon": "Brain"
+    },
+    {
+      "id": "srv-4",
+      "name": "Post-Surgical Joint Mobilization",
+      "duration": "45 Mins",
+      "price": 900,
+      "icon": "Stethoscope"
+    },
+    {
+      "id": "srv-5",
+      "name": "Personalized Home Visit Physiotherapy",
+      "duration": "60 Mins",
+      "price": 1500,
+      "icon": "Home"
+    }
+  ],
+  "appointments": [
+    {
+      "id": "apt-1791465588863",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "patientPhone": "+918122555002",
+      "serviceName": "Personalized Home Visit Physiotherapy",
+      "date": "2026-10-09",
+      "timeSlot": "05:00 PM - 06:00 PM (Evening Home Visits)",
+      "visitType": "Home-Visit",
+      "isHomeVisit": true,
+      "homeAddress": "91, Eden Garden ,Sudhanantha Barathi Street,Ganapathipuram, East Tambaram, Chennai -600059",
+      "landmark": "",
+      "locationUrl": "https://www.google.com/maps?q=12.920099,80.112018",
+      "status": "Confirmed",
+      "assignedPhysio": "Dr. Joel Calvin C",
+      "notes": "",
+      "paymentStatus": "DUE",
+      "createdAt": "2026-10-08",
+      "customAmount": 1500,
+      "amount": 1500,
+      "feeSetBy": "Dr. Joel Calvin C (Lead Physio)",
+      "feeNote": "Follow-up electrotherapy session",
+      "feeUpdatedAt": "2026-10-08T16:35:35.944Z",
+      "paymentId": "pay-1791469064637",
+      "paymentTxnId": "TXN-HLX-179070",
+      "paidAt": "2026-10-08T14:17:44.637Z",
+      "paymentMethod": "Google Pay (UPI)",
+      "securitySignature": "HLX-SHA256-72C91469528A0AA0"
+    },
+    {
+      "id": "apt-unpaid-sarah",
+      "patientId": "usr_pat_2",
+      "patientName": "Sarah Smith",
+      "patientPhone": "+91 91234 56789",
+      "serviceName": "Orthopedic Physiotherapy",
+      "date": "2026-10-10",
+      "timeSlot": "10:00 AM - 11:00 AM",
+      "visitType": "In-Clinic",
+      "isHomeVisit": false,
+      "status": "Confirmed",
+      "assignedPhysio": "Dr. Joel Calvin C (Lead Physio)",
+      "notes": "Post-treatment evaluation completed",
+      "paymentStatus": "PAID",
+      "amount": 1000,
+      "customAmount": 1000,
+      "feeSetBy": "Dr. Joel Calvin C (Lead Physio)",
+      "feeNote": "Cervical & shoulder mobilization session | Settled consultation fee for Sarah Smith",
+      "feeUpdatedAt": "2026-10-08T14:31:07.924Z",
+      "paymentId": "pay-1791470703641",
+      "paymentTxnId": "TXN-HLX-690472",
+      "paidAt": "2026-10-08T14:45:03.641Z",
+      "paymentMethod": "Cash at Clinic Reception",
+      "securitySignature": "HLX-SHA256-D7C85A7CBC73DEE4"
+    },
+    {
+      "id": "apt-unpaid-jobel",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "patientPhone": "+918122555002",
+      "serviceName": "Sports Injury Rehabilitation",
+      "date": "2026-10-11",
+      "timeSlot": "04:00 PM - 05:00 PM",
+      "visitType": "In-Clinic",
+      "isHomeVisit": false,
+      "status": "Confirmed",
+      "assignedPhysio": "Dr. Joel Calvin C (Lead Physio)",
+      "notes": "Knee rehabilitation session",
+      "paymentStatus": "PAID",
+      "amount": 800,
+      "customAmount": 800,
+      "feeSetBy": "Dr. Joel Calvin C (Lead Physio)",
+      "feeNote": "Knee ligament recovery follow-up fee | Consultation fee collected in full at reception desk",
+      "feeUpdatedAt": "2026-10-08T14:31:07.924Z",
+      "paymentId": "pay-1791470008587",
+      "paymentTxnId": "TXN-HLX-167723",
+      "paidAt": "2026-10-08T14:33:28.587Z",
+      "paymentMethod": "Cash Collected at Clinic Reception Desk",
+      "securitySignature": "HLX-SHA256-0DBA55F6BDFC5622"
+    },
+    {
+      "id": "apt-jobel-due-session",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "patientPhone": "+918122555002",
+      "serviceName": "Personalized Home Visit Physiotherapy",
+      "date": "2026-10-12",
+      "timeSlot": "05:00 PM - 06:00 PM (Evening Home Visits)",
+      "visitType": "Home-Visit",
+      "isHomeVisit": true,
+      "homeAddress": "91, Eden Garden ,Sudhanantha Barathi Street,East Tambaram, Chennai -600059",
+      "status": "Confirmed",
+      "assignedPhysio": "Dr. Joel Calvin C (Lead Physio)",
+      "notes": "Post-treatment manual joint mobilization",
+      "paymentStatus": "PAID",
+      "amount": 800,
+      "customAmount": 800,
+      "feeSetBy": "Dr. Joel Calvin C (Lead Physio)",
+      "feeNote": "Post-treatment orthopedic manual therapy | Settled consultation fee for Jobel Creflo",
+      "feeUpdatedAt": "2026-10-08T14:35:18.052Z",
+      "paymentId": "pay-1791470816520",
+      "paymentTxnId": "TXN-HLX-198233",
+      "paidAt": "2026-10-08T14:46:56.520Z",
+      "paymentMethod": "Cash at Clinic Reception",
+      "securitySignature": "HLX-SHA256-731B9F083F41EFAA"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "log-1791643682362",
+      "timestamp": "2026-10-10T14:48:02.362Z",
+      "user": "Pauline .T",
+      "action": "BLOCKED RESIGNED NURSE LOGIN",
+      "details": "Resigned/Inactive nurse Pauline .T attempted login."
+    },
+    {
+      "id": "log-1791639860836",
+      "timestamp": "2026-10-10T13:44:20.836Z",
+      "user": "Dr. Calvin Joel (Doctor/Admin)",
+      "action": "Nurse Resigned & Portal Access Revoked",
+      "details": "Doctor marked nurse Pauline .T as Resigned. Nurse portal login blocked."
+    },
+    {
+      "id": "log-1791639800259",
+      "timestamp": "2026-10-10T13:43:20.259Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791556982045",
+      "timestamp": "2026-10-09T14:43:02.045Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Status Modified",
+      "details": "Updated appointment #apt-1791465588863 status from 'Pending Dispatch' to 'Confirmed'. Slot booked count adjusted."
+    },
+    {
+      "id": "log-1791556979142",
+      "timestamp": "2026-10-09T14:42:59.142Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Status Modified",
+      "details": "Updated appointment #apt-1791465588863 status from 'Cancelled' to 'Pending Dispatch'. Slot booked count adjusted."
+    },
+    {
+      "id": "log-1791556976940",
+      "timestamp": "2026-10-09T14:42:56.940Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Status Modified",
+      "details": "Updated appointment #apt-1791465588863 status from 'Pending Dispatch' to 'Cancelled'. Slot booked count adjusted."
+    },
+    {
+      "id": "log-1791556974464",
+      "timestamp": "2026-10-09T14:42:54.464Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Status Modified",
+      "details": "Updated appointment #apt-1791465588863 status from 'Confirmed' to 'Pending Dispatch'. Slot booked count adjusted."
+    },
+    {
+      "id": "log-1791556461133",
+      "timestamp": "2026-10-09T14:34:21.133Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791477335944",
+      "timestamp": "2026-10-08T16:35:35.944Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Jobel Creflo (Appointment #apt-1791465588863) from ₹800 to ₹1500 (Note: Follow-up electrotherapy session)."
+    },
+    {
+      "id": "log-1791477206229",
+      "timestamp": "2026-10-08T16:33:26.229Z",
+      "user": "Pauline .T",
+      "action": "Nurse Logged In",
+      "details": "Nurse session initiated for Pauline .T (@paulinecharles11995) - Duty Shift: Morning (08:00 AM - 02:00 PM)."
+    },
+    {
+      "id": "log-1791477206210",
+      "timestamp": "2026-10-08T16:33:26.210Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791477118383",
+      "timestamp": "2026-10-08T16:31:58.383Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791474598202",
+      "timestamp": "2026-10-08T15:49:58.202Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791474554686",
+      "timestamp": "2026-10-08T15:49:14.686Z",
+      "user": "Pauline .T",
+      "action": "Nurse Logged In",
+      "details": "Nurse session initiated for Pauline .T (@paulinecharles11995) - Duty Shift: Morning (08:00 AM - 02:00 PM)."
+    },
+    {
+      "id": "log-1791474510166",
+      "timestamp": "2026-10-08T15:48:30.166Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791474476098",
+      "timestamp": "2026-10-08T15:47:56.098Z",
+      "user": "pauline. t",
+      "action": "UNAUTHORIZED NURSE LOGIN ATTEMPT",
+      "details": "Failed nurse login attempt for unlisted nurse identifier \"pauline. t\"."
+    },
+    {
+      "id": "log-1791474468109",
+      "timestamp": "2026-10-08T15:47:48.109Z",
+      "user": "pauline.t",
+      "action": "UNAUTHORIZED NURSE LOGIN ATTEMPT",
+      "details": "Failed nurse login attempt for unlisted nurse identifier \"pauline.t\"."
+    },
+    {
+      "id": "log-1791474439287",
+      "timestamp": "2026-10-08T15:47:19.287Z",
+      "user": "Dr. Calvin Joel (Doctor/Admin)",
+      "action": "New Nurse Onboarded",
+      "details": "Doctor added new incoming nurse: Pauline .T (@paulinecharles11995, Email: paulinecharles11995@gmail.com) for shift Morning (08:00 AM - 02:00 PM)."
+    },
+    {
+      "id": "log-1791474118569",
+      "timestamp": "2026-10-08T15:41:58.569Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791471236360",
+      "timestamp": "2026-10-08T14:53:56.360Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791471232695",
+      "timestamp": "2026-10-08T14:53:52.696Z",
+      "user": "jobelcrefloc@gmail.com",
+      "action": "UNAUTHORIZED ADMIN ACCESS ATTEMPT",
+      "details": "Access denied for jobelcrefloc@gmail.com. Not in Doctor Whitelist."
+    },
+    {
+      "id": "log-1791470827228",
+      "timestamp": "2026-10-08T14:47:07.228Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791470816562",
+      "timestamp": "2026-10-08T14:46:56.562Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Payment Collected & Settled",
+      "details": "Collected ₹800 from Jobel Creflo via Cash at Clinic Reception (Txn: TXN-HLX-198233, Signature: HLX-SHA256-731B9F083F41EFAA)."
+    },
+    {
+      "id": "log-1791470703673",
+      "timestamp": "2026-10-08T14:45:03.673Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Payment Collected & Settled",
+      "details": "Collected ₹1000 from Sarah Smith via Cash at Clinic Reception (Txn: TXN-HLX-690472, Signature: HLX-SHA256-D7C85A7CBC73DEE4)."
+    },
+    {
+      "id": "log-1791470008588",
+      "timestamp": "2026-10-08T14:33:28.588Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Payment Collected & Settled",
+      "details": "Collected ₹800 from Jobel Creflo via Cash Collected at Clinic Reception Desk (Txn: TXN-HLX-167723, Signature: HLX-SHA256-0DBA55F6BDFC5622)."
+    },
+    {
+      "id": "log-1791469621035",
+      "timestamp": "2026-10-08T14:27:01.035Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791469064638",
+      "timestamp": "2026-10-08T14:17:44.638Z",
+      "user": "Jobel Creflo",
+      "action": "Clinical Payment Received (Verified)",
+      "details": "Payment of ₹800 settled via Google Pay (UPI) (Ref: TXN-HLX-179070, Signature: HLX-SHA256-72C91469528A0AA0). Doctor fee verified."
+    },
+    {
+      "id": "log-1791469047789",
+      "timestamp": "2026-10-08T14:17:27.789Z",
+      "user": "Jobel Creflo",
+      "action": "Clinical Payment Received (Verified)",
+      "details": "Payment of ₹800 settled via Google Pay (UPI) (Ref: TXN-HLX-861931, Signature: HLX-SHA256-80110E5E1A250F3E). Doctor fee verified."
+    },
+    {
+      "id": "log-1791468504839",
+      "timestamp": "2026-10-08T14:08:24.839Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791468492452",
+      "timestamp": "2026-10-08T14:08:12.452Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Status Modified",
+      "details": "Updated appointment #apt-1791465588863 status from 'Pending Dispatch' to 'Confirmed'. Slot booked count adjusted."
+    },
+    {
+      "id": "log-1791468436491",
+      "timestamp": "2026-10-08T14:07:16.491Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791468046287",
+      "timestamp": "2026-10-08T14:00:46.287Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791468046266",
+      "timestamp": "2026-10-08T14:00:46.266Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Jobel Creflo (Appointment #apt-1791465588863) from Default Schedule to ₹800 (Note: Post-treatment orthopedic therapy)."
+    },
+    {
+      "id": "log-1791468046259",
+      "timestamp": "2026-10-08T14:00:46.259Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791468040582",
+      "timestamp": "2026-10-08T14:00:40.582Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791468040562",
+      "timestamp": "2026-10-08T14:00:40.562Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Fee Reset to Post-Treatment Setting",
+      "details": "Doctor reset session fee for Jobel Creflo (Appointment #apt-1791465588863) to be evaluated after treatment."
+    },
+    {
+      "id": "log-1791468040546",
+      "timestamp": "2026-10-08T14:00:40.546Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791467914117",
+      "timestamp": "2026-10-08T13:58:34.117Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791467911392",
+      "timestamp": "2026-10-08T13:58:31.392Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791467911362",
+      "timestamp": "2026-10-08T13:58:31.362Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Jobel Creflo (Appointment #apt-1791465588863) from Default Schedule to ₹800 (Note: Post-treatment orthopedic therapy)."
+    },
+    {
+      "id": "log-1791467911349",
+      "timestamp": "2026-10-08T13:58:31.349Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791467907004",
+      "timestamp": "2026-10-08T13:58:27.004Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791467906993",
+      "timestamp": "2026-10-08T13:58:26.993Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Fee Reset to Post-Treatment Setting",
+      "details": "Doctor reset session fee for Jobel Creflo (Appointment #apt-1791465588863) to be evaluated after treatment."
+    },
+    {
+      "id": "log-1791467906978",
+      "timestamp": "2026-10-08T13:58:26.978Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791467800448",
+      "timestamp": "2026-10-08T13:56:40.448Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791467797692",
+      "timestamp": "2026-10-08T13:56:37.692Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791467797653",
+      "timestamp": "2026-10-08T13:56:37.653Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Jobel Creflo (Appointment #apt-1791465588863) from ₹800 to ₹800 (Note: Post-treatment orthopedic therapy)."
+    },
+    {
+      "id": "log-1791467797639",
+      "timestamp": "2026-10-08T13:56:37.639Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791467793239",
+      "timestamp": "2026-10-08T13:56:33.239Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791467513693",
+      "timestamp": "2026-10-08T13:51:53.693Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791467510939",
+      "timestamp": "2026-10-08T13:51:50.939Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791467510907",
+      "timestamp": "2026-10-08T13:51:50.907Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Jobel Creflo (Appointment #apt-1791465588863) from Default Schedule to ₹800 (Note: Post-treatment orthopedic therapy)."
+    },
+    {
+      "id": "log-1791467510893",
+      "timestamp": "2026-10-08T13:51:50.893Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791467506585",
+      "timestamp": "2026-10-08T13:51:46.585Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791467338749",
+      "timestamp": "2026-10-08T13:48:58.749Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791466849745",
+      "timestamp": "2026-10-08T13:40:49.745Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Jobel Creflo (Appointment #apt-1791465588863) from Default Schedule to ₹0."
+    },
+    {
+      "id": "log-1791466726212",
+      "timestamp": "2026-10-08T13:38:46.213Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791465836206",
+      "timestamp": "2026-10-08T13:23:56.206Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791465829840",
+      "timestamp": "2026-10-08T13:23:49.840Z",
+      "user": "jobelcrefloc",
+      "action": "UNAUTHORIZED ADMIN ACCESS ATTEMPT",
+      "details": "Access denied for jobelcrefloc. Not in Doctor Whitelist."
+    },
+    {
+      "id": "log-1791465803428",
+      "timestamp": "2026-10-08T13:23:23.428Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791465588864",
+      "timestamp": "2026-10-08T13:19:48.864Z",
+      "user": "Jobel Creflo",
+      "action": "Home Visit Requested",
+      "details": "Booked Home Visit session for Jobel Creflo on 2026-10-09 (05:00 PM - 06:00 PM (Evening Home Visits)). Slot booked count updated."
+    },
+    {
+      "id": "log-1791465561676",
+      "timestamp": "2026-10-08T13:19:21.676Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791465515139",
+      "timestamp": "2026-10-08T13:18:35.139Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791464039487",
+      "timestamp": "2026-10-08T12:53:59.487Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Cancelled & Deleted",
+      "details": "Cancelled appointment for Jobel Creflo (10:00 AM - 11:00 AM). Slot booked count decremented."
+    },
+    {
+      "id": "log-1791464036839",
+      "timestamp": "2026-10-08T12:53:56.839Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Cancelled & Deleted",
+      "details": "Cancelled appointment for Jobel Creflo (10:00 AM - 11:00 AM). Slot booked count decremented."
+    },
+    {
+      "id": "log-1791464034376",
+      "timestamp": "2026-10-08T12:53:54.376Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Cancelled & Deleted",
+      "details": "Cancelled appointment for Jobel Creflo (10:00 AM - 11:00 AM). Slot booked count decremented."
+    },
+    {
+      "id": "log-1791464031941",
+      "timestamp": "2026-10-08T12:53:51.941Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Cancelled & Deleted",
+      "details": "Cancelled appointment for Kavitha Ramasamy (09:00 AM - 10:00 AM). Slot booked count decremented."
+    },
+    {
+      "id": "log-1791464029011",
+      "timestamp": "2026-10-08T12:53:49.011Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Cancelled & Deleted",
+      "details": "Cancelled appointment for Jobel Creflo (10:00 AM - 11:00 AM). Slot booked count decremented."
+    },
+    {
+      "id": "log-1791464023775",
+      "timestamp": "2026-10-08T12:53:43.775Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Appointment Cancelled & Deleted",
+      "details": "Cancelled appointment for Jobel Creflo (10:00 AM - 11:00 AM). Slot booked count decremented."
+    },
+    {
+      "id": "log-1791463510857",
+      "timestamp": "2026-10-08T12:45:10.857Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Dr. Joel Calvin C (Lead Physio) (@drcalvin)."
+    },
+    {
+      "id": "log-1791463471600",
+      "timestamp": "2026-10-08T12:44:31.600Z",
+      "user": "Jobel Creflo",
+      "action": "Clinic Appointment Booked",
+      "details": "Booked In-Clinic session for Jobel Creflo on 2026-10-09 (10:00 AM - 11:00 AM). Slot booked count updated."
+    },
+    {
+      "id": "log-1791463437817",
+      "timestamp": "2026-10-08T12:43:57.817Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791463256079",
+      "timestamp": "2026-10-08T12:40:56.079Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Dr. Joel Calvin C (Lead Physio) (@drcalvin)."
+    },
+    {
+      "id": "log-1791463112684",
+      "timestamp": "2026-10-08T12:38:32.684Z",
+      "user": "Jobel Creflo",
+      "action": "Clinical Payment Received (Verified)",
+      "details": "Payment of ₹1200 settled via Google Pay (UPI) (Ref: TXN-HLX-978308, Signature: HLX-SHA256-BCC44CF8C26FB6CC). Doctor fee verified."
+    },
+    {
+      "id": "log-1791399989640",
+      "timestamp": "2026-10-07T19:06:29.640Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791394435902",
+      "timestamp": "2026-10-07T17:33:55.902Z",
+      "user": "Jobel Creflo",
+      "action": "Clinic Appointment Booked",
+      "details": "Booked In-Clinic session for Jobel Creflo on 2026-10-15 (10:00 AM - 11:00 AM). Slot booked count updated."
+    },
+    {
+      "id": "log-1791394354921",
+      "timestamp": "2026-10-07T17:32:34.921Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791391191817",
+      "timestamp": "2026-10-07T16:39:51.817Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Kavitha Ramasamy (Appointment #apt-1791387751908) from Default Schedule to ₹1750 (Note: Specialized Rehab Protocol)."
+    },
+    {
+      "id": "log-1791391191748",
+      "timestamp": "2026-10-07T16:39:51.748Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791391038554",
+      "timestamp": "2026-10-07T16:37:18.554Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Fee Reset to Standard Schedule",
+      "details": "Doctor reset session fee for Kavitha Ramasamy (Appointment #apt-1791387751908) back to standard clinic rate (₹1,200)."
+    },
+    {
+      "id": "log-1791391038511",
+      "timestamp": "2026-10-07T16:37:18.511Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Kavitha Ramasamy (Appointment #apt-1791387751908) from ₹1750 to ₹1450 (Note: Senior Citizen Concession)."
+    },
+    {
+      "id": "log-1791391038321",
+      "timestamp": "2026-10-07T16:37:18.321Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791389664635",
+      "timestamp": "2026-10-07T16:14:24.635Z",
+      "user": "Nurse Preethi Raman",
+      "action": "Nurse Logged In",
+      "details": "Nurse session initiated for Nurse Preethi Raman (@preethinurse) - Duty Shift: Morning Shift (08:00 AM - 02:00 PM)."
+    },
+    {
+      "id": "log-1791389664610",
+      "timestamp": "2026-10-07T16:14:24.610Z",
+      "user": "Dr. Calvin Joel (Doctor/Admin)",
+      "action": "New Nurse Onboarded",
+      "details": "Doctor added new incoming nurse: Nurse Preethi Raman (@preethinurse, Email: preethi.raman@healixclinic.in) for shift Morning Shift (08:00 AM - 02:00 PM)."
+    },
+    {
+      "id": "log-1791388380423",
+      "timestamp": "2026-10-07T15:53:00.423Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Timing Slot Availability Toggled",
+      "details": "Set slot '09:00 AM - 10:00 AM' availability to true. Booked count set to 1."
+    },
+    {
+      "id": "log-1791388376560",
+      "timestamp": "2026-10-07T15:52:56.560Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Timing Slot Availability Toggled",
+      "details": "Set slot '09:00 AM - 10:00 AM' availability to false. Booked count set to 4."
+    },
+    {
+      "id": "log-1791387751942",
+      "timestamp": "2026-10-07T15:42:31.942Z",
+      "user": "Kavitha Ramasamy",
+      "action": "Clinical Payment Received (Verified)",
+      "details": "Payment of ₹1750 settled via PhonePe (UPI) (Ref: TXN-HLX-478960, Signature: HLX-SHA256-EEBB6AB5AD101EFF). Doctor fee verified."
+    },
+    {
+      "id": "log-1791387751926",
+      "timestamp": "2026-10-07T15:42:31.926Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Kavitha Ramasamy (Appointment #apt-1791387751908) from Default Schedule to ₹1750 (Note: Special customized rehabilitation regimen)."
+    },
+    {
+      "id": "log-1791387751908",
+      "timestamp": "2026-10-07T15:42:31.908Z",
+      "user": "Kavitha Ramasamy",
+      "action": "Clinic Appointment Booked",
+      "details": "Booked In-Clinic session for Kavitha Ramasamy on 2026-10-12 (09:00 AM - 10:00 AM). Slot booked count updated."
+    },
+    {
+      "id": "log-1791387721630",
+      "timestamp": "2026-10-07T15:42:01.630Z",
+      "user": "Jobel Creflo",
+      "action": "Clinical Payment Received (Verified)",
+      "details": "Payment of ₹1450 settled via Bajaj Finserv Health EMI · 3 Months No-Cost EMI (0% Interest) (Ref: TXN-HLX-476300, Signature: HLX-SHA256-3CDF15769FA8AC2D). Doctor fee verified."
+    },
+    {
+      "id": "log-1791387721595",
+      "timestamp": "2026-10-07T15:42:01.595Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Individual Patient Fee Configured",
+      "details": "Doctor set session fee for Jobel Creflo (Appointment #apt-1791309674885) from Default Schedule to ₹1450 (Note: Specialized personalized physical therapy package)."
+    },
+    {
+      "id": "log-1791386351010",
+      "timestamp": "2026-10-07T15:19:11.010Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791386338269",
+      "timestamp": "2026-10-07T15:18:58.269Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Password Reset via Verified Email OTP (ADMIN)",
+      "details": "Password successfully updated for account Dr. Joel Calvin C (Lead Physio) (@drcalvin) after verifying 6-digit OTP sent to registered email calvinjoelc@gmail.com."
+    },
+    {
+      "id": "log-1791386329894",
+      "timestamp": "2026-10-07T15:18:49.894Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Security Verification OTP Dispatched",
+      "details": "Password reset verification code dispatched to registered email calvinjoelc@gmail.com (ADMIN)."
+    },
+    {
+      "id": "log-1791386205931",
+      "timestamp": "2026-10-07T15:16:45.931Z",
+      "user": "Jobel Creflo",
+      "action": "Patient Logged In",
+      "details": "Patient session initiated for Jobel Creflo (@jobelcrefloc)."
+    },
+    {
+      "id": "log-1791386030581",
+      "timestamp": "2026-10-07T15:13:50.581Z",
+      "user": "Dr. Joel Calvin C (Lead Physio)",
+      "action": "Admin Portal Authenticated",
+      "details": "Doctor/Admin logged into PhysioCare Admin Portal (@drcalvin, calvinjoelc@gmail.com)."
+    },
+    {
+      "id": "log-1791385404270",
+      "timestamp": "2026-10-07T15:03:24.270Z",
+      "user": "Dr. Calvin Joel (Doctor/Admin)",
+      "action": "Nurse Account Permanently Removed",
+      "details": "Doctor permanently deleted nurse record for Nurse Kavitha Raman (Email: kavitha.nurse@gmail.com)."
+    },
+    {
+      "id": "log-1791385392045",
+      "timestamp": "2026-10-07T15:03:12.045Z",
+      "user": "Nurse Kavitha Raman",
+      "action": "BLOCKED RESIGNED NURSE LOGIN",
+      "details": "Resigned/Inactive nurse Nurse Kavitha Raman attempted login."
+    },
+    {
+      "id": "log-1791385384320",
+      "timestamp": "2026-10-07T15:03:04.320Z",
+      "user": "Dr. Calvin Joel (Doctor/Admin)",
+      "action": "Nurse Marked Resigned / Inactive",
+      "details": "Doctor changed nurse Nurse Kavitha Raman's status from \"Active\" to \"Resigned\". Nurse portal access revoked."
+    },
+    {
+      "id": "log-1791385371649",
+      "timestamp": "2026-10-07T15:02:51.649Z",
+      "user": "Nurse Kavitha Raman",
+      "action": "Nurse Logged In",
+      "details": "Nurse session initiated for Nurse Kavitha Raman (@kavitha_nurse) - Duty Shift: Evening (01:00 PM - 08:00 PM)."
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay-1791470816520",
+      "txnId": "TXN-HLX-198233",
+      "invoiceNo": "INV-2026-3677",
+      "appointmentId": "apt-jobel-due-session",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "patientPhone": "+918122555002",
+      "serviceName": "Personalized Home Visit Physiotherapy",
+      "amount": 800,
+      "currency": "INR",
+      "paymentMethod": "CLINIC_CASH",
+      "methodLabel": "Cash at Clinic Reception",
+      "collectedBy": "Dr. Joel Calvin C (Lead Physio)",
+      "notes": "Settled consultation fee for Jobel Creflo",
+      "paymentDetails": {
+        "referenceNo": "",
+        "recordedBy": "Dr. Joel Calvin C (Lead Physio)"
+      },
+      "securitySignature": "HLX-SHA256-731B9F083F41EFAA",
+      "verificationHash": "731b9f083f41efaa7678e8b3825b9b46fae0738bb32032b11f283d5f1139a3a0",
+      "complianceBadge": "In-Clinic Official Settlement · GST Compliant · Verified",
+      "status": "COMPLETED",
+      "paidAt": "2026-10-08T14:46:56.520Z",
+      "timestamp": "8/10/2026, 8:16:56 pm",
+      "isHomeVisit": true,
+      "date": "2026-10-12",
+      "timeSlot": "05:00 PM - 06:00 PM (Evening Home Visits)"
+    },
+    {
+      "id": "pay-1791470703641",
+      "txnId": "TXN-HLX-690472",
+      "invoiceNo": "INV-2026-5615",
+      "appointmentId": "apt-unpaid-sarah",
+      "patientId": "usr_pat_2",
+      "patientName": "Sarah Smith",
+      "patientPhone": "+91 91234 56789",
+      "serviceName": "Orthopedic Physiotherapy",
+      "amount": 1000,
+      "currency": "INR",
+      "paymentMethod": "CLINIC_CASH",
+      "methodLabel": "Cash at Clinic Reception",
+      "collectedBy": "Dr. Joel Calvin C (Lead Physio)",
+      "notes": "Settled consultation fee for Sarah Smith",
+      "paymentDetails": {
+        "referenceNo": "",
+        "recordedBy": "Dr. Joel Calvin C (Lead Physio)"
+      },
+      "securitySignature": "HLX-SHA256-D7C85A7CBC73DEE4",
+      "verificationHash": "d7c85a7cbc73dee40f0fc272c5d130c927ec91692fd51d22d144af667cc63673",
+      "complianceBadge": "In-Clinic Official Settlement · GST Compliant · Verified",
+      "status": "COMPLETED",
+      "paidAt": "2026-10-08T14:45:03.641Z",
+      "timestamp": "8/10/2026, 8:15:03 pm",
+      "isHomeVisit": false,
+      "date": "2026-10-10",
+      "timeSlot": "10:00 AM - 11:00 AM"
+    },
+    {
+      "id": "pay-1791470008587",
+      "txnId": "TXN-HLX-167723",
+      "invoiceNo": "INV-2026-5283",
+      "appointmentId": "apt-unpaid-jobel",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "patientPhone": "+918122555002",
+      "serviceName": "Sports Injury Rehabilitation",
+      "amount": 800,
+      "currency": "INR",
+      "paymentMethod": "CLINIC_CASH",
+      "methodLabel": "Cash Collected at Clinic Reception Desk",
+      "collectedBy": "Dr. Joel Calvin C (Lead Physio)",
+      "notes": "Consultation fee collected in full at reception desk",
+      "paymentDetails": {
+        "referenceNo": "REC-TEST-909",
+        "recordedBy": "Dr. Joel Calvin C (Lead Physio)"
+      },
+      "securitySignature": "HLX-SHA256-0DBA55F6BDFC5622",
+      "verificationHash": "0dba55f6bdfc562257a322e2315b3b846079472dff252d7e0057dbe194fdf705",
+      "complianceBadge": "In-Clinic Official Settlement · GST Compliant · Verified",
+      "status": "COMPLETED",
+      "paidAt": "2026-10-08T14:33:28.587Z",
+      "timestamp": "8/10/2026, 8:03:28 pm",
+      "isHomeVisit": false,
+      "date": "2026-10-11",
+      "timeSlot": "04:00 PM - 05:00 PM"
+    },
+    {
+      "id": "pay-1791469064637",
+      "txnId": "TXN-HLX-179070",
+      "invoiceNo": "INV-2026-4632",
+      "appointmentId": "apt-1791465588863",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "serviceName": "Personalized Home Visit Physiotherapy",
+      "amount": 800,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "methodLabel": "Google Pay (UPI)",
+      "paymentDetails": {
+        "upiApp": "Google Pay",
+        "upiId": "patient@upi"
+      },
+      "securitySignature": "HLX-SHA256-72C91469528A0AA0",
+      "verificationHash": "72c91469528a0aa0fa97b49a0b8200465096e55fdb4a32a68e7165e3a9bd3175",
+      "complianceBadge": "PCI-DSS Level 1 · RBI 2026 Guidelines · 256-Bit SSL",
+      "twoFactorVerified": true,
+      "twoFactorMethod": "NPCI UPI MPIN 2FA",
+      "status": "COMPLETED",
+      "paidAt": "2026-10-08T14:17:44.637Z",
+      "timestamp": "8/10/2026, 7:47:44 pm"
+    },
+    {
+      "id": "pay-1791469047756",
+      "txnId": "TXN-HLX-861931",
+      "invoiceNo": "INV-2026-1997",
+      "appointmentId": "apt-1791465588863",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "serviceName": "Personalized Home Visit Physiotherapy",
+      "amount": 800,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "methodLabel": "Google Pay (UPI)",
+      "paymentDetails": {
+        "upiApp": "Google Pay",
+        "upiId": "patient@upi"
+      },
+      "securitySignature": "HLX-SHA256-80110E5E1A250F3E",
+      "verificationHash": "80110e5e1a250f3e1d13b280db8381894f4f03e3e78a77aa1f8456a693f35ab6",
+      "complianceBadge": "PCI-DSS Level 1 · RBI 2026 Guidelines · 256-Bit SSL",
+      "twoFactorVerified": true,
+      "twoFactorMethod": "NPCI UPI MPIN 2FA",
+      "status": "COMPLETED",
+      "paidAt": "2026-10-08T14:17:27.756Z",
+      "timestamp": "8/10/2026, 7:47:27 pm"
+    },
+    {
+      "id": "pay-1791463112618",
+      "txnId": "TXN-HLX-978308",
+      "invoiceNo": "INV-2026-1923",
+      "appointmentId": "apt-1791394435902",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "serviceName": "Orthopedic Physiotherapy",
+      "amount": 1200,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "methodLabel": "Google Pay (UPI)",
+      "paymentDetails": {
+        "upiApp": "Google Pay",
+        "upiId": "patient@upi"
+      },
+      "securitySignature": "HLX-SHA256-BCC44CF8C26FB6CC",
+      "verificationHash": "bcc44cf8c26fb6ccf13194633c7cf44bf22e451c99a473518d48c718ba404069",
+      "complianceBadge": "PCI-DSS Level 1 · RBI 2026 Guidelines · 256-Bit SSL",
+      "twoFactorVerified": true,
+      "twoFactorMethod": "NPCI UPI MPIN 2FA",
+      "status": "COMPLETED",
+      "paidAt": "2026-10-08T12:38:32.618Z",
+      "timestamp": "8/10/2026, 6:08:32 pm"
+    },
+    {
+      "id": "pay-1791387751941",
+      "txnId": "TXN-HLX-478960",
+      "invoiceNo": "INV-2026-7002",
+      "appointmentId": "apt-1791387751908",
+      "patientId": "usr_pat_test_99",
+      "patientName": "Kavitha Ramasamy",
+      "serviceName": "Orthopedic Physiotherapy",
+      "amount": 1750,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "methodLabel": "PhonePe (UPI)",
+      "paymentDetails": {
+        "upiApp": "PhonePe",
+        "upiId": "kavitha@ybl"
+      },
+      "securitySignature": "HLX-SHA256-EEBB6AB5AD101EFF",
+      "verificationHash": "eebb6ab5ad101eff904a2506ffddc1f7b87963ae7e0a8385cf86b163d887c983",
+      "complianceBadge": "PCI-DSS Level 1 · RBI 2026 Guidelines · 256-Bit SSL",
+      "twoFactorVerified": true,
+      "twoFactorMethod": "NPCI UPI MPIN 2FA",
+      "status": "COMPLETED",
+      "paidAt": "2026-10-07T15:42:31.941Z",
+      "timestamp": "7/10/2026, 9:12:31 pm"
+    },
+    {
+      "id": "pay-1791387721627",
+      "txnId": "TXN-HLX-476300",
+      "invoiceNo": "INV-2026-7071",
+      "appointmentId": "apt-1791309674885",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "serviceName": "Orthopedic Physiotherapy",
+      "amount": 1450,
+      "currency": "INR",
+      "paymentMethod": "EMI",
+      "methodLabel": "Bajaj Finserv Health EMI · 3 Months No-Cost EMI (0% Interest)",
+      "paymentDetails": {
+        "emiProvider": "Bajaj Finserv Health EMI",
+        "tenure": "3 Months No-Cost EMI",
+        "accountRef": "+91 8122555002"
+      },
+      "securitySignature": "HLX-SHA256-3CDF15769FA8AC2D",
+      "verificationHash": "3cdf15769fa8ac2d5296f3fd4b11c3e7d8802a80a10c0f084bfa6a1a3274ebac",
+      "complianceBadge": "PCI-DSS Level 1 · RBI 2026 Guidelines · 256-Bit SSL",
+      "twoFactorVerified": true,
+      "twoFactorMethod": "Bank 3D Secure OTP",
+      "status": "COMPLETED",
+      "paidAt": "2026-10-07T15:42:01.627Z",
+      "timestamp": "7/10/2026, 9:12:01 pm"
+    },
+    {
+      "id": "pay-1791383007301",
+      "txnId": "TXN-HLX-855346",
+      "invoiceNo": "INV-2026-8694",
+      "appointmentId": "apt-1791309674885",
+      "patientId": "usr_pat_1791298880726",
+      "patientName": "Jobel Creflo",
+      "serviceName": "Orthopedic Physiotherapy",
+      "amount": 1200,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "methodLabel": "Google Pay (UPI)",
+      "paymentDetails": {
+        "upiApp": "Google Pay",
+        "upiId": "jobel@okaxis"
+      },
+      "status": "COMPLETED",
+      "paidAt": "2026-10-07T14:23:27.301Z",
+      "timestamp": "7/10/2026, 7:53:27 pm"
+    },
+    {
+      "id": "pay-seed-1",
+      "txnId": "TXN-HLX-782914",
+      "invoiceNo": "INV-2026-1042",
+      "appointmentId": "apt-1001",
+      "patientId": "usr_pat_1",
+      "patientName": "John Doe",
+      "serviceName": "Post-Surgical Joint Mobilization",
+      "amount": 900,
+      "currency": "INR",
+      "paymentMethod": "UPI",
+      "methodLabel": "Google Pay (UPI)",
+      "paymentDetails": {
+        "upiApp": "Google Pay",
+        "upiId": "johndoe@okaxis"
+      },
+      "status": "COMPLETED",
+      "paidAt": "2026-10-02T11:30:00.000Z",
+      "timestamp": "02/10/2026, 05:00:00 pm (IST)"
+    }
+  ]
+}
