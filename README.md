@@ -1,6 +1,24 @@
 # 🏥 Healix Advance Physiotherapy & Rehabilitation Center
 
+[![Live Web Application](https://img.shields.io/badge/Live_App-Render_Cloud-00b4d8?style=for-the-badge&logo=render&logoColor=white)](https://healix-care-clinic.onrender.com)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Jobel26093/Healix---Website)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
+
 A modern, full-stack clinical management and patient rehabilitation platform built with **React 19**, **Vite**, and **Node.js Express**, featuring role-based access control (RBAC), multi-portal authentication, and a complete **Java (JDK 21) Middleware Suite**.
+
+---
+
+## 🌐 Live Web Application
+
+- 🚀 **Live Demo URL**: [https://healix-care-clinic.onrender.com](https://healix-care-clinic.onrender.com)
+- ⚙️ **Backend Health Endpoint**: [https://healix-care-clinic.onrender.com/api/health](https://healix-care-clinic.onrender.com/api/health)
+
+### 🔐 Demo Credentials for All 3 Portals:
+| Portal | Login Identifier | Password | Access Privileges |
+| :--- | :--- | :--- | :--- |
+| **🛡️ Doctor / Executive Admin** | `calvinjoelc@gmail.com` | `adminpassword123` | Master registry, staff onboarding, fees & income ledger, timetable control |
+| **🩺 Junior Physiotherapist** | `anitha@physiocare.local` | `anitha123` | Patient queue, clinical session notes, rehab observations |
+| **🏠 Patient Portal** | `john.doe@example.com` | `userpassword123` | Book slot / home visit, view appointments, payment receipts |
 
 ---
 
@@ -25,10 +43,25 @@ A modern, full-stack clinical management and patient rehabilitation platform bui
 | **Backend API** | Node.js, Express, CORS, Nodemailer, Dotenv |
 | **Java Middleware** | JDK 21 `com.sun.net.httpserver.Filter`, Jakarta Servlet Filter, Spring Boot Interceptor |
 | **Data Store** | JSON-backed clinical store with audit logging |
+| **Cloud Deployment** | Render Blueprint (`render.yaml`) & Vercel (`vercel.json`) |
 
 ---
 
-## 🚀 Getting Started
+## ☁️ 1-Click Free Cloud Deployment
+
+### Deploying on Render (Recommended for Full-Stack)
+1. Click the **[Deploy to Render](https://render.com/deploy?repo=https://github.com/Jobel26093/Healix---Website)** button above.
+2. Sign in with your GitHub account (`Jobel26093`).
+3. Render will automatically read [`render.yaml`](render.yaml) and configure:
+   - **Build Command**: `npm run build`
+   - **Start Command**: `npm start`
+4. Click **Create Web Service**.
+5. Once built (takes ~1-2 minutes), Render gives you a live permanent HTTPS URL (e.g., `https://healix-care-clinic.onrender.com`).
+6. Copy that URL and paste it into your GitHub repository under **About ⚙️ -> Website**.
+
+---
+
+## 🚀 Local Development Setup
 
 ### Prerequisites
 
@@ -44,19 +77,12 @@ A modern, full-stack clinical management and patient rehabilitation platform bui
    cd Healix---Website
    ```
 
-2. **Install dependencies**:
+2. **Install and Build**:
    ```bash
-   # Install client dependencies
-   cd client && npm install
-
-   # Install server dependencies
-   cd ../server && npm install
-
-   # Return to project root
-   cd ..
+   npm run build
    ```
 
-3. **Start both Frontend & Backend**:
+3. **Start both Frontend & Backend in Development Mode**:
    ```bash
    npm run dev
    ```
