@@ -4,7 +4,7 @@
   "description": "Express backend with RBAC and ERP engines for ApexERP",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node --watch src/index.js",
     "dev": "node --watch src/index.js"
   },
   "dependencies": {

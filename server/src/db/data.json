@@ -62,11 +62,10 @@
       "role": "NURSE",
       "phone": "+91 9171022305",
       "shift": "Morning (08:00 AM - 02:00 PM)",
-      "status": "Resigned",
+      "status": "Active",
       "supervisingDoctor": "Dr. Calvin Joel (Chief Physiotherapist)",
       "createdAt": "2026-10-08T15:47:19.287Z",
-      "notes": "Newly onboarded clinic nurse by Medical Director. | Resigned on Oct 10, 2026. Access revoked.",
-      "resignedAt": "2026-10-10T13:44:20.836Z"
+      "notes": "Certified Junior Physiotherapist on morning rehabilitation duty."
     }
   ],
   "clinicTimings": [

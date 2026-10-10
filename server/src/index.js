@@ -99,15 +99,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-if (require.main === module || !process.env.VERCEL) {
-  app.listen(PORT, () => {
-    console.log(`====================================================`);
-    console.log(`🏥 Healix Care Clinic Web Application running at http://localhost:${PORT}`);
-    console.log(`🔗 REST API Root: http://localhost:${PORT}/api`);
-    console.log(`🔐 Admin Doctor Whitelist: calvinjoelc@gmail.com`);
-    console.log(`🩺 Clinic Nurse Staff: Managed exclusively by Attending Doctor via Admin Portal`);
-    console.log(`====================================================`);
-  });
-}
-
-module.exports = app;
+app.listen(PORT, () => {
+  console.log(`====================================================`);
+  console.log(`🏥 Healix Care Clinic Web Application running at http://localhost:${PORT}`);
+  console.log(`🔗 REST API Root: http://localhost:${PORT}/api`);
+  console.log(`🔐 Admin Doctor Whitelist: calvinjoelc@gmail.com`);
+  console.log(`🩺 Clinic Nurse Staff: Managed exclusively by Attending Doctor via Admin Portal`);
+  console.log(`====================================================`);
+});
