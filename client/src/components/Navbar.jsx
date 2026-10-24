@@ -58,8 +58,9 @@ export default function Navbar({
           src={healixLogo} 
           alt="Healix Physiotherapy Logo" 
           onError={(e) => {
-            if (e.currentTarget.src !== '/healix-logo.png') {
-              e.currentTarget.src = '/healix-logo.png';
+            const fallbackUrl = `${import.meta.env.BASE_URL}healix-logo.png`;
+            if (e.currentTarget.src !== fallbackUrl) {
+              e.currentTarget.src = fallbackUrl;
             }
           }}
           style={{

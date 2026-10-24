@@ -28,25 +28,38 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+          cache-dependency-path: 'client/package-lock.json'
 
-      - name: Install Dependencies
+      - name: Install Client Dependencies
         run: |
           cd client
           npm install
 
-      - name: Build Client
+      - name: Build Client Web App
         run: |
           cd client
           npm run build
 
+      - name: Deploy to gh-pages Branch (Branch Mode)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./client/dist
+          keep_files: false
+          force_orphan: true
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        continue-on-error: true
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './client/dist'
+        continue-on-error: true
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages (Actions Mode)
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
