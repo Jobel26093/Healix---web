@@ -24,7 +24,8 @@ export default function Navbar({
   activeTab, 
   setActiveTab,
   adminTab,
-  setAdminTab
+  setAdminTab,
+  onOpenPortalSelect
 }) {
   const { currentUser, logout, theme, toggleTheme, can, PERMISSIONS } = useAuth();
   const toast = useToast();
@@ -258,11 +259,11 @@ export default function Navbar({
         {currentUser?.role !== 'ADMIN' && (
           <button 
             onClick={onOpenBooking} 
-            className="btn btn-cyan btn-sm"
-            style={{ fontWeight: '700', padding: '0.4rem 0.85rem' }}
+            className="btn btn-cyan btn-sm navbar-btn-book"
+            style={{ fontWeight: '700', padding: '0.4rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
           >
-            <Calendar size={14} />
-            <span>Book Appointment</span>
+            <Calendar size={13} />
+            <span className="navbar-book-label">Book Appointment</span>
           </button>
         )}
 
@@ -270,7 +271,7 @@ export default function Navbar({
         <button 
           onClick={toggleTheme}
           className="btn btn-secondary btn-sm"
-          style={{ padding: '0.4rem 0.55rem' }}
+          style={{ padding: '0.4rem 0.55rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           title="Toggle Light/Dark Theme"
           aria-label="Toggle theme"
         >
@@ -299,22 +300,22 @@ export default function Navbar({
           </div>
         ) : (
           <button 
-            onClick={() => setActiveTab('login')} 
-            className="btn btn-secondary btn-sm" 
+            onClick={onOpenPortalSelect || (() => setActiveTab('login'))} 
+            className="btn btn-secondary btn-sm navbar-btn-portals" 
             title="Clinic Access Portals" 
             style={{ 
-              padding: '0.4rem 0.85rem',
+              padding: '0.4rem 0.75rem',
               borderColor: (activeTab === 'login' || activeTab === 'portal') ? 'var(--accent-gold)' : 'var(--border-color)',
               background: (activeTab === 'login' || activeTab === 'portal') ? 'rgba(251, 191, 36, 0.18)' : 'var(--bg-input)',
               color: (activeTab === 'login' || activeTab === 'portal') ? 'var(--accent-gold)' : 'var(--text-main)',
               fontWeight: '700',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.4rem'
+              gap: '0.35rem'
             }}
           >
             <ShieldCheck size={14} color="var(--accent-gold)" />
-            <span>Clinic Portals</span>
+            <span className="navbar-portals-label">Clinic Portals</span>
           </button>
         )}
       </div>

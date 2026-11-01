@@ -932,26 +932,56 @@ select:-webkit-autofill {
     font-size: 1.1rem !important;
   }
 
-  /* Navbar Mobile Layout: Brand on top-left, controls on top-right, nav tabs scrolling horizontally underneath */
+  /* Navbar Mobile Layout: Clean 2-Row Architecture */
   .navbar {
     height: auto !important;
-    min-height: 62px !important;
-    padding: 0.65rem 0.85rem !important;
+    min-height: 52px !important;
+    padding: 0.45rem 0.75rem !important;
     display: flex !important;
     flex-direction: row !important;
     flex-wrap: wrap !important;
     justify-content: space-between !important;
     align-items: center !important;
-    gap: 0.5rem !important;
+    gap: 0.35rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
 
   .navbar .navbar-brand {
     order: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .navbar .navbar-brand img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .navbar .healix-brand-title {
+    font-size: 1.25rem !important;
+    line-height: 1 !important;
+  }
+
+  .navbar .navbar-brand p {
+    font-size: 0.55rem !important;
+    margin-top: 1px !important;
   }
 
   .navbar .navbar-controls {
     order: 2 !important;
     margin-left: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  .navbar .navbar-controls .btn {
+    padding: 0.35rem 0.55rem !important;
+    font-size: 0.76rem !important;
   }
 
   .navbar nav,
@@ -962,9 +992,10 @@ select:-webkit-autofill {
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
     scrollbar-width: none !important;
-    padding-bottom: 0.25rem !important;
+    padding: 0.15rem 0 0.25rem 0 !important;
     gap: 0.35rem !important;
     flex-wrap: nowrap !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
   }
 
   .navbar nav::-webkit-scrollbar,
@@ -1147,6 +1178,37 @@ select:-webkit-autofill {
     box-sizing: border-box !important;
   }
 
+  .hero-logo-emblem {
+    margin: 1.25rem auto 0.25rem auto !important;
+  }
+
+  .hero-logo-emblem img {
+    width: 96px !important;
+    height: 96px !important;
+    border-width: 3px !important;
+  }
+
+  /* Login Portal Mobile Optimization */
+  .login-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.25rem !important;
+  }
+
+  .login-right-column {
+    order: 1 !important;
+    padding: 1.5rem 1rem !important;
+  }
+
+  .login-left-column {
+    order: 2 !important;
+    padding: 1.5rem 1rem !important;
+  }
+
+  .mobile-portal-tabs {
+    display: flex !important;
+  }
+
   /* Universal container safety */
   .card, 
   .main-layout, 
@@ -1169,5 +1231,23 @@ select:-webkit-autofill {
   .btn {
     padding: 0.45rem 0.65rem !important;
     font-size: 0.8rem !important;
+  }
+
+  .navbar-book-label {
+    display: none !important;
+  }
+
+  .navbar-btn-book::after {
+    content: "Book" !important;
+    font-weight: 700;
+  }
+
+  .navbar-portals-label {
+    display: none !important;
+  }
+
+  .navbar-btn-portals::after {
+    content: "Portals" !important;
+    font-weight: 700;
   }
 }

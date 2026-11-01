@@ -329,7 +329,7 @@ export default function LoginPage({ onLoginSuccess, onGoHome, initialRole = 'pat
       </div>
 
       {/* 2. Unified 2-Column Split Portal Console */}
-      <div style={{
+      <div className="login-grid" style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
         gap: '2rem',
@@ -339,7 +339,7 @@ export default function LoginPage({ onLoginSuccess, onGoHome, initialRole = 'pat
       }}>
         {/* LEFT COLUMN: Clinical Ecosystem Showcase & Role Switcher */}
         <div 
-          className="card"
+          className="card login-left-column"
           style={{
             background: 'linear-gradient(145deg, rgba(28, 14, 46, 0.85) 0%, rgba(18, 8, 30, 0.95) 100%)',
             borderColor: roleTheme.borderColor,
@@ -537,7 +537,7 @@ export default function LoginPage({ onLoginSuccess, onGoHome, initialRole = 'pat
 
         {/* RIGHT COLUMN: Interactive Glassmorphic Auth Console */}
         <div 
-          className="card"
+          className="card login-right-column"
           style={{
             background: 'var(--bg-card)',
             borderColor: roleTheme.borderColor,
@@ -561,6 +561,91 @@ export default function LoginPage({ onLoginSuccess, onGoHome, initialRole = 'pat
           }} />
 
           <div>
+            {/* Quick Segmented Role Selector Pill Tabs on Mobile */}
+            <div className="mobile-portal-tabs" style={{ display: 'none', marginBottom: '1.25rem' }}>
+              <div style={{
+                display: 'flex',
+                background: 'rgba(23, 13, 36, 0.95)',
+                padding: '4px',
+                borderRadius: '10px',
+                border: '1px solid var(--border-color)',
+                gap: '4px',
+                width: '100%',
+                boxSizing: 'border-box'
+              }}>
+                <button
+                  type="button"
+                  onClick={() => handlePortalSwitch('patient')}
+                  style={{
+                    flex: 1,
+                    padding: '8px 4px',
+                    borderRadius: '7px',
+                    border: 'none',
+                    background: activePortal === 'patient' ? 'var(--accent-magenta, #d91b76)' : 'transparent',
+                    color: activePortal === 'patient' ? '#ffffff' : 'var(--text-muted)',
+                    fontWeight: '800',
+                    fontSize: '0.76rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  <User size={13} />
+                  <span>Patient</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handlePortalSwitch('nurse')}
+                  style={{
+                    flex: 1,
+                    padding: '8px 4px',
+                    borderRadius: '7px',
+                    border: 'none',
+                    background: activePortal === 'nurse' ? 'var(--accent-teal, #14b8a6)' : 'transparent',
+                    color: activePortal === 'nurse' ? '#ffffff' : 'var(--text-muted)',
+                    fontWeight: '800',
+                    fontSize: '0.76rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  <Stethoscope size={13} />
+                  <span>Physio</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handlePortalSwitch('admin')}
+                  style={{
+                    flex: 1,
+                    padding: '8px 4px',
+                    borderRadius: '7px',
+                    border: 'none',
+                    background: activePortal === 'admin' ? 'var(--accent-purple, #9333ea)' : 'transparent',
+                    color: activePortal === 'admin' ? '#ffffff' : 'var(--text-muted)',
+                    fontWeight: '800',
+                    fontSize: '0.76rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  <ShieldCheck size={13} />
+                  <span>Admin</span>
+                </button>
+              </div>
+            </div>
             {/* Booking Continuation Notice */}
             {bookingNotice && activePortal === 'patient' && (
               <div style={{

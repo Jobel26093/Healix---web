@@ -4,6 +4,7 @@ import { ToastProvider, useToast } from './context/ToastContext';
 import { PERMISSIONS } from './services/permissionEngine';
 import Navbar from './components/Navbar';
 import BookAppointmentModal from './components/BookAppointmentModal';
+import PortalSelectModal from './components/PortalSelectModal';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -54,6 +55,24 @@ function PhysioAppContent() {
   // Booking Modal State
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isHomeVisitBooking, setIsHomeVisitBooking] = useState(false);
+  
+  // Dynamic Portal Selector Modal State
+  const [isPortalModalOpen, setIsPortalModalOpen] = useState(false);
+
+  const handleSelectPortal = (roleKey) => {
+    setLoginPortalRole(roleKey);
+    setActiveTab('login');
+  };
+
+  const handleNavigateToUserHome = () => {
+    if (currentUser?.role === 'ADMIN' || currentUser?.accessLevel === 'full' || currentUser?.isCoAdmin) {
+      setActiveTab('admin-home');
+    } else if (currentUser?.role === 'NURSE') {
+      setActiveTab('nurse-dashboard');
+    } else {
+      setActiveTab('patient-home');
+    }
+  };
 
   const openBookingModal = (homeVisitFlag = false) => {
     if (!currentUser) {
@@ -205,6 +224,7 @@ function PhysioAppContent() {
             onOpenPatientAuth={() => { setLoginPortalRole('patient'); setActiveTab('login'); }}
             onOpenAdminAuth={() => { setLoginPortalRole('admin'); setActiveTab('login'); }}
             onOpenNurseAuth={() => { setLoginPortalRole('nurse'); setActiveTab('login'); }}
+            onOpenPortalSelect={() => setIsPortalModalOpen(true)}
           />
         );
     }
@@ -217,6 +237,7 @@ function PhysioAppContent() {
         onOpenAdminAuth={() => { setLoginPortalRole('admin'); setActiveTab('login'); }}
         onOpenNurseAuth={() => { setLoginPortalRole('nurse'); setActiveTab('login'); }}
         onOpenBooking={() => openBookingModal(false)}
+        onOpenPortalSelect={() => setIsPortalModalOpen(true)}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         adminTab={adminTab}
@@ -226,6 +247,15 @@ function PhysioAppContent() {
       <main className="main-layout">
         {renderActivePage()}
       </main>
+
+      {/* Dynamic Portal Selection Modal */}
+      <PortalSelectModal 
+        isOpen={isPortalModalOpen}
+        onClose={() => setIsPortalModalOpen(false)}
+        onSelectPortal={handleSelectPortal}
+        currentUser={currentUser}
+        onNavigateToUserHome={handleNavigateToUserHome}
+      />
 
       {/* Patient Self-Booking Modal */}
       <BookAppointmentModal 

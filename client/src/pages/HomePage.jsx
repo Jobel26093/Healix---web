@@ -24,7 +24,7 @@ import { useToast } from '../context/ToastContext';
 import ClinicLocationMap from '../components/ClinicLocationMap';
 import healixLogo from '../assets/healix-logo.png';
 
-export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdminAuth, onOpenNurseAuth }) {
+export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdminAuth, onOpenNurseAuth, onOpenPortalSelect }) {
   const toast = useToast();
   const [copiedLocation, setCopiedLocation] = useState(false);
   const [activeNurses, setActiveNurses] = useState([]);
@@ -54,7 +54,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
         background: 'linear-gradient(135deg, rgba(74, 14, 110, 0.4) 0%, rgba(217, 27, 118, 0.22) 55%, rgba(251, 191, 36, 0.1) 100%)',
         borderColor: 'rgba(217, 27, 118, 0.5)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap-reverse', width: '100%' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap', width: '100%' }}>
           <div style={{ maxWidth: '750px', flex: '1 1 300px', minWidth: 0, width: '100%' }}>
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
               <span className="badge badge-cyan" style={{ background: 'rgba(217, 27, 118, 0.2)', color: '#f472b6', borderColor: '#d91b76' }}>
@@ -97,7 +97,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
               </button>
 
               <button 
-                onClick={onOpenPatientAuth} 
+                onClick={onOpenPortalSelect || onOpenPatientAuth} 
                 className="btn btn-secondary" 
                 style={{ padding: '0.85rem 1.4rem', fontSize: '1rem', borderColor: 'rgba(251, 191, 36, 0.45)', color: 'var(--accent-gold)' }}
               >
@@ -121,7 +121,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
           </div>
 
           {/* Logo Emblem Badge */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div className="hero-logo-emblem" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             <img 
               src={healixLogo} 
               alt="Healix Physiotherapy Official Logo" 
