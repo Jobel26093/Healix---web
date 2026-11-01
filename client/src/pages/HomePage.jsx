@@ -50,13 +50,12 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
       {/* Hero Banner with Official Healix Logo */}
-      <div className="card" style={{
+      <div className="card hero-card" style={{
         background: 'linear-gradient(135deg, rgba(74, 14, 110, 0.4) 0%, rgba(217, 27, 118, 0.22) 55%, rgba(251, 191, 36, 0.1) 100%)',
-        borderColor: 'rgba(217, 27, 118, 0.5)',
-        padding: '3rem 2.5rem'
+        borderColor: 'rgba(217, 27, 118, 0.5)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2.5rem', flexWrap: 'wrap-reverse' }}>
-          <div style={{ maxWidth: '750px', flex: '1 1 480px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap-reverse', width: '100%' }}>
+          <div style={{ maxWidth: '750px', flex: '1 1 300px', minWidth: 0, width: '100%' }}>
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
               <span className="badge badge-cyan" style={{ background: 'rgba(217, 27, 118, 0.2)', color: '#f472b6', borderColor: '#d91b76' }}>
                 🏥 Official Rehabilitation Center
@@ -66,7 +65,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
               </span>
             </div>
             
-            <h1 style={{ fontSize: '2.85rem', fontWeight: '800', lineHeight: '1.2', letterSpacing: '-0.02em' }}>
+            <h1 style={{ fontSize: '2.85rem', fontWeight: '800', lineHeight: '1.2', letterSpacing: '-0.02em', wordBreak: 'break-word' }}>
               Restore Mobility &amp; Reclaim Your Active Life with{' '}
               <span style={{
                 background: 'linear-gradient(135deg, #c084fc 0%, #f472b6 50%, #fbbf24 100%)',
@@ -82,7 +81,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
               Evidence-based orthopedic rehabilitation, sports injury reconditioning, post-surgical mobility recovery, and personalized <strong>Home Visit Rehabilitation Services</strong>.
             </p>
 
-            <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div className="hero-action-buttons" style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', alignItems: 'center' }}>
               <button onClick={() => onOpenBooking(false)} className="btn btn-cyan" style={{ padding: '0.85rem 1.6rem', fontSize: '1rem' }}>
                 <Calendar size={20} />
                 <span>Book Clinic Visit</span>
@@ -364,8 +363,8 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
       </div>
 
       {/* DEDICATED HOME VISIT FEATURE HIGHLIGHT */}
-      <div className="card" style={{ background: 'linear-gradient(135deg, rgba(74, 14, 110, 0.35), rgba(251, 191, 36, 0.12))', borderColor: 'rgba(251, 191, 36, 0.45)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '2rem', alignItems: 'center' }}>
+      <div className="card home-visit-card" style={{ background: 'linear-gradient(135deg, rgba(74, 14, 110, 0.35), rgba(251, 191, 36, 0.12))', borderColor: 'rgba(251, 191, 36, 0.45)' }}>
+        <div className="home-visit-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '2rem', alignItems: 'center', width: '100%', maxWidth: '100%' }}>
           <div>
             <span className="badge badge-gold" style={{ marginBottom: '0.75rem' }}>
               🚗 Special Home Visit Column &amp; Care Unit
@@ -436,10 +435,9 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
       </div>
 
       {/* DEDICATED CLINIC LOCATION & DIRECTIONS */}
-      <div id="clinic-location" className="card" style={{
+      <div id="clinic-location" className="card clinic-location-card" style={{
         background: 'linear-gradient(135deg, rgba(74, 14, 110, 0.35), rgba(217, 27, 118, 0.18))',
-        borderColor: 'rgba(217, 27, 118, 0.45)',
-        padding: '2.5rem 2rem'
+        borderColor: 'rgba(217, 27, 118, 0.45)'
       }}>
         <div style={{ marginBottom: '1.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
@@ -469,11 +467,11 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', alignItems: 'stretch' }}>
+        <div className="clinic-location-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.5rem', alignItems: 'stretch', width: '100%', maxWidth: '100%', minWidth: 0 }}>
           {/* Clinic Details Card */}
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1.5rem' }}>
-            <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1.5rem', width: '100%', minWidth: 0, boxSizing: 'border-box' }}>
+            <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', width: '100%', boxSizing: 'border-box' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
                 <div style={{
                   background: 'rgba(217, 27, 118, 0.2)',
                   color: 'var(--healix-magenta)',
@@ -487,15 +485,15 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
                 }}>
                   <MapPin size={28} />
                 </div>
-                <div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '0.35rem' }}>
+                <div style={{ minWidth: 0, flex: '1 1 200px' }}>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '0.35rem', wordBreak: 'break-word' }}>
                     Healix Advance Physiotherapy and Rehabilitation Center
                   </h3>
                   <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>
                     Comprehensive center for specialized Orthopedic rehabilitation, Sports Medicine, Post-Surgical recovery, and Pediatric Physiotherapy.
                   </p>
                   
-                  <p style={{ fontSize: '0.85rem', color: 'var(--accent-gold)', marginTop: '0.5rem', marginBottom: 0, fontWeight: '600' }}>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--accent-gold)', marginTop: '0.5rem', marginBottom: 0, fontWeight: '600', wordBreak: 'break-word' }}>
                     📍 8/207 Pillayar Koil St, Nookampalayam Main Rd, Sithalapakkam, Chennai - 600131
                   </p>
                   
@@ -515,7 +513,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
               </div>
 
               {/* Highlights */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem', marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-color)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 160px), 1fr))', gap: '0.75rem', marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-color)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--text-muted)' }}>
                   <CheckCircle2 size={16} color="var(--accent-cyan)" />
                   <span>Dedicated Patient Parking</span>
@@ -536,13 +534,13 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
             </div>
 
             {/* Quick Actions */}
-            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+            <div className="clinic-actions-row" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', width: '100%', boxSizing: 'border-box' }}>
               <a
                 href="https://maps.app.goo.gl/9ZwbWzGo3AVLExwL9"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-cyan"
-                style={{ flex: 1, minWidth: '180px', textDecoration: 'none' }}
+                style={{ flex: '1 1 180px', textDecoration: 'none', minWidth: 0 }}
               >
                 <Navigation size={18} />
                 <span>Get Driving Directions</span>
@@ -552,7 +550,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
               <a
                 href="tel:+917305394549"
                 className="btn btn-secondary"
-                style={{ borderColor: 'rgba(16, 185, 129, 0.5)', color: '#10b981', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', fontWeight: '700' }}
+                style={{ borderColor: 'rgba(16, 185, 129, 0.5)', color: '#10b981', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', fontWeight: '700', minWidth: 0, flex: '1 1 200px' }}
                 title="Call Admin / Doctor Direct"
               >
                 <PhoneCall size={18} />
@@ -562,7 +560,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
               <button
                 onClick={handleCopyLocation}
                 className="btn btn-secondary"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', minWidth: 0, flex: '1 1 140px' }}
                 title="Copy Google Maps link"
               >
                 {copiedLocation ? <Check size={18} color="var(--accent-green)" /> : <Copy size={18} />}
@@ -572,7 +570,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
               <button
                 onClick={() => onOpenBooking(false)}
                 className="btn btn-secondary"
-                style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}
+                style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)', minWidth: 0, flex: '1 1 120px' }}
               >
                 <Calendar size={18} />
                 <span>Book Slot</span>
@@ -581,7 +579,9 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
           </div>
 
           {/* Right: Interactive Clinic Location Map */}
-          <ClinicLocationMap height="100%" minHeight="360px" />
+          <div style={{ width: '100%', maxWidth: '100%', minWidth: 0, boxSizing: 'border-box' }}>
+            <ClinicLocationMap height="100%" minHeight="360px" />
+          </div>
         </div>
       </div>
 

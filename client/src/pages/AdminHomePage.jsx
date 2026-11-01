@@ -291,7 +291,7 @@ export default function AdminHomePage({
       </div>
 
       {/* 3. Executive Action Modules */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.25rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.25rem', width: '100%', maxWidth: '100%' }}>
         {/* Module 1 */}
         <div 
           onClick={onViewAppointments}

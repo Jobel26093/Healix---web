@@ -740,7 +740,7 @@ export default function PatientPaymentPortal({ onBackToDashboard, onOpenBooking,
 
       {/* 3. TAB: CHECKOUT & PAYMENT GATEWAY */}
       {activeTab === 'checkout' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 420px) 1fr', gap: '2rem', alignItems: 'flex-start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '2rem', alignItems: 'flex-start', width: '100%', maxWidth: '100%' }}>
           {/* Left Column: Invoice Details & Breakdown */}
           <div className="card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', position: 'sticky', top: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.75rem' }}>

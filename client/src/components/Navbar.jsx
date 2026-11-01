@@ -52,6 +52,7 @@ export default function Navbar({
     <header className="navbar">
       {/* Brand: Clicks to the user's specific Home Page */}
       <div 
+        className="navbar-brand"
         onClick={handleLogoClick}
         title={currentUser ? `Go to ${currentUser.role === 'ADMIN' ? 'Admin' : (currentUser.role === 'NURSE' ? 'Junior Physio' : 'Patient')} Home Page` : 'Healix Physiotherapy Home'}
         style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', flexShrink: 0 }}
@@ -252,7 +253,7 @@ export default function Navbar({
       </nav>
 
       {/* Right Controls & Primary CTA */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexShrink: 0 }}>
+      <div className="navbar-controls" style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexShrink: 0 }}>
         {/* Primary CTA (Patient self-booking, hidden for Doctor/Admin) */}
         {currentUser?.role !== 'ADMIN' && (
           <button 

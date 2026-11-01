@@ -130,7 +130,7 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
 
       // Card Popup with Google Ratings & Verified Info
       const popupHtml = `
-        <div style="font-family: 'Plus Jakarta Sans', system-ui, sans-serif; padding: 4px; min-width: 230px; color: #170d24;">
+        <div style="font-family: 'Plus Jakarta Sans', system-ui, sans-serif; padding: 4px; max-width: 240px; box-sizing: border-box; color: #170d24;">
           <div style="font-weight: 800; font-size: 13px; color: #791a9c; margin-bottom: 2px; line-height: 1.3;">
             ${CLINIC_NAME}
           </div>
@@ -242,7 +242,11 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
       height: height,
       minHeight: minHeight,
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      width: '100%',
+      maxWidth: '100%',
+      minWidth: 0,
+      boxSizing: 'border-box'
     }}>
       <style>{`
         @keyframes healixPinGlow {
@@ -258,6 +262,16 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
           border-radius: 10px !important;
           box-shadow: 0 10px 25px rgba(0,0,0,0.35) !important;
           border: 1px solid rgba(217, 27, 118, 0.3) !important;
+          max-width: 250px !important;
+        }
+        .leaflet-popup-content {
+          margin: 10px 12px !important;
+          max-width: 230px !important;
+        }
+        .leaflet-container {
+          width: 100% !important;
+          max-width: 100% !important;
+          box-sizing: border-box !important;
         }
         .leaflet-control-zoom {
           margin-top: 14px !important;
@@ -279,16 +293,19 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
       {/* Top Header Control Bar */}
       <div style={{
         background: 'rgba(23, 13, 36, 0.98)',
-        padding: '0.65rem 1rem',
+        padding: '0.65rem 0.85rem',
         borderBottom: '1px solid rgba(217, 27, 118, 0.3)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         gap: '0.5rem',
         flexWrap: 'wrap',
-        zIndex: 10
+        zIndex: 10,
+        width: '100%',
+        maxWidth: '100%',
+        boxSizing: 'border-box'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', minWidth: 0, flex: '1 1 auto' }}>
           <div style={{
             width: '28px',
             height: '28px',
@@ -296,12 +313,13 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
             background: 'rgba(217, 27, 118, 0.2)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            flexShrink: 0
           }}>
             <MapPin size={16} color="var(--accent-magenta, #d91b76)" />
           </div>
-          <div>
-            <div style={{ fontWeight: '800', fontSize: '0.84rem', color: '#ffffff', lineHeight: 1.2 }}>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ fontWeight: '800', fontSize: '0.84rem', color: '#ffffff', lineHeight: 1.2, wordBreak: 'break-word' }}>
               Healix Advance Physiotherapy
             </div>
             <div style={{ fontSize: '0.68rem', color: 'var(--accent-gold, #fbbf24)', fontWeight: '700' }}>
@@ -311,7 +329,7 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
         </div>
 
         {/* View Switcher: Google Map | Satellite */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap' }}>
           <div style={{
             display: 'flex',
             background: 'rgba(255, 255, 255, 0.08)',
@@ -327,8 +345,8 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
                 color: '#ffffff',
                 border: 'none',
                 borderRadius: '4px',
-                padding: '4px 12px',
-                fontSize: '0.74rem',
+                padding: '4px 10px',
+                fontSize: '0.72rem',
                 fontWeight: '700',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease'
@@ -344,8 +362,8 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
                 color: '#ffffff',
                 border: 'none',
                 borderRadius: '4px',
-                padding: '4px 12px',
-                fontSize: '0.74rem',
+                padding: '4px 10px',
+                fontSize: '0.72rem',
                 fontWeight: '700',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease'
@@ -373,41 +391,46 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
         style={{ 
           flex: 1, 
           width: '100%', 
+          maxWidth: '100%',
           height: '100%', 
-          minHeight: '340px',
+          minHeight: '320px',
           background: '#e5e7eb',
-          zIndex: 1
+          zIndex: 1,
+          boxSizing: 'border-box'
         }} 
       />
 
       {/* Dedicated Bottom Footer Bar */}
       <div style={{
         background: 'rgba(23, 13, 36, 0.98)',
-        padding: '0.55rem 1rem',
+        padding: '0.55rem 0.85rem',
         borderTop: '1px solid rgba(217, 27, 118, 0.25)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: '0.5rem',
         flexWrap: 'wrap',
-        zIndex: 10
+        zIndex: 10,
+        width: '100%',
+        maxWidth: '100%',
+        boxSizing: 'border-box'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', minWidth: '180px' }}>
-          <MapPin size={15} color="var(--accent-magenta, #d91b76)" />
-          <span style={{ fontSize: '0.75rem', color: '#e2e8f0', fontWeight: '500' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', minWidth: 0, flex: '1 1 auto' }}>
+          <MapPin size={15} color="var(--accent-magenta, #d91b76)" style={{ flexShrink: 0 }} />
+          <span style={{ fontSize: '0.74rem', color: '#e2e8f0', fontWeight: '500', wordBreak: 'break-word' }}>
             Nookampalayam Main Rd, Sithalapakkam, Chennai - 600131
           </span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap' }}>
           <button
             onClick={handleCopyAddress}
             className="btn btn-secondary btn-sm"
-            style={{ fontSize: '0.7rem', padding: '0.2rem 0.6rem', height: '26px' }}
+            style={{ fontSize: '0.7rem', padding: '0.2rem 0.55rem', height: '26px' }}
             title="Copy clinic address"
           >
             {copied ? <Check size={12} color="var(--accent-green, #10b981)" /> : <Copy size={12} />}
-            <span>{copied ? 'Copied' : 'Copy Address'}</span>
+            <span>{copied ? 'Copied' : 'Copy'}</span>
           </button>
 
           <a
@@ -418,7 +441,7 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
             style={{
               fontSize: '0.72rem',
               fontWeight: '700',
-              padding: '0.2rem 0.75rem',
+              padding: '0.2rem 0.65rem',
               height: '26px',
               textDecoration: 'none',
               display: 'inline-flex',
@@ -427,7 +450,7 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
             }}
           >
             <Navigation size={12} />
-            <span>Open in Google Maps ↗</span>
+            <span>Open in Maps ↗</span>
           </a>
         </div>
       </div>

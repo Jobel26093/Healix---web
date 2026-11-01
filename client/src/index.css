@@ -78,13 +78,33 @@
   padding: 0;
 }
 
+html {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-main);
   min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
   overflow-x: hidden;
   line-height: 1.5;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 code, pre, .font-mono {
@@ -1062,19 +1082,77 @@ select:-webkit-autofill {
     width: 100% !important;
     justify-content: center !important;
   }
+
+  /* Clinic Location & Directions Section */
+  .clinic-location-card {
+    padding: 1.15rem 0.85rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .clinic-location-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .clinic-actions-row {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0.5rem !important;
+  }
+
+  .clinic-actions-row .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .home-visit-card {
+    padding: 1.15rem 0.85rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-visit-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .hero-card {
+    padding: 1.5rem 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Universal container safety */
+  .card, 
+  .main-layout, 
+  .navbar, 
+  .table-container {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
 }
 
 @media (max-width: 480px) {
   .main-layout {
-    padding: 0.75rem 0.5rem !important;
+    padding: 0.65rem 0.4rem !important;
   }
 
   h1 {
-    font-size: 1.45rem !important;
+    font-size: 1.35rem !important;
   }
 
   .btn {
-    padding: 0.45rem 0.75rem !important;
-    font-size: 0.82rem !important;
+    padding: 0.45rem 0.65rem !important;
+    font-size: 0.8rem !important;
   }
 }

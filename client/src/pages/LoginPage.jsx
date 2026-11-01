@@ -331,9 +331,11 @@ export default function LoginPage({ onLoginSuccess, onGoHome, initialRole = 'pat
       {/* 2. Unified 2-Column Split Portal Console */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
         gap: '2rem',
-        alignItems: 'stretch'
+        alignItems: 'stretch',
+        width: '100%',
+        maxWidth: '100%'
       }}>
         {/* LEFT COLUMN: Clinical Ecosystem Showcase & Role Switcher */}
         <div 
