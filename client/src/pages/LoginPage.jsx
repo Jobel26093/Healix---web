@@ -308,7 +308,7 @@ export default function LoginPage({ onLoginSuccess, onGoHome, initialRole = 'pat
   return (
     <div style={{ maxWidth: '1180px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '1.5rem', minHeight: 'calc(100vh - 120px)' }}>
       {/* 1. Header Navigation Bar */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+      <div className="login-top-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
         <button 
           onClick={onGoHome} 
           className="btn btn-secondary btn-sm"
@@ -318,7 +318,7 @@ export default function LoginPage({ onLoginSuccess, onGoHome, initialRole = 'pat
           <span>Back to Clinic &amp; Services</span>
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+        <div className="login-top-badges" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           <span className="badge badge-cyan" style={{ fontSize: '0.72rem', background: 'rgba(20, 184, 166, 0.15)', color: '#2dd4bf', borderColor: 'rgba(20, 184, 166, 0.4)' }}>
             ● Clinic Hours: Mon–Sat 09:00 AM – 07:00 PM
           </span>
