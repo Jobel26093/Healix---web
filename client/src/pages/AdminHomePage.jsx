@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  ShieldCheck, 
-  Users, 
-  Calendar, 
-  Clock, 
-  Home, 
-  Plus, 
-  CheckCircle, 
-  MapPin, 
-  Activity, 
-  RotateCw, 
-  ArrowRight, 
-  UserCheck, 
-  Stethoscope, 
-  Sliders, 
+import {
+  ShieldCheck,
+  Users,
+  Calendar,
+  Clock,
+  Home,
+  Plus,
+  CheckCircle,
+  MapPin,
+  Activity,
+  RotateCw,
+  ArrowRight,
+  UserCheck,
+  Stethoscope,
+  Sliders,
   FileText,
   AlertTriangle,
   Zap,
@@ -28,14 +28,14 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
-export default function AdminHomePage({ 
-  onViewAppointments, 
-  onViewPatients, 
-  onViewTimings, 
+export default function AdminHomePage({
+  onViewAppointments,
+  onViewPatients,
+  onViewTimings,
   onViewSecurity,
   onViewNurses,
   onViewIncome,
-  onOpenBooking 
+  onOpenBooking
 }) {
   const { currentUser, sendAdminOtp, updateAdminPassword } = useAuth();
   const toast = useToast();
@@ -179,7 +179,7 @@ export default function AdminHomePage({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
       {/* 1. Executive Banner */}
-      <div 
+      <div
         className="card"
         style={{
           background: 'linear-gradient(135deg, rgba(74, 14, 110, 0.45) 0%, rgba(121, 26, 156, 0.25) 50%, rgba(217, 27, 118, 0.15) 100%)',
@@ -210,24 +210,24 @@ export default function AdminHomePage({
           </div>
 
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <button 
-              onClick={fetchAdminData} 
+            <button
+              onClick={fetchAdminData}
               disabled={loading}
               className="btn btn-secondary btn-sm"
             >
               <RotateCw size={15} className={loading ? 'animate-spin' : ''} />
               <span>{loading ? 'Syncing...' : 'Sync Data'}</span>
             </button>
-            <button 
-              onClick={onViewIncome || onViewAppointments} 
+            <button
+              onClick={onViewIncome || onViewAppointments}
               className="btn btn-secondary btn-sm"
               style={{ borderColor: 'var(--accent-gold)', color: 'var(--accent-gold)', fontWeight: '800' }}
             >
               <CreditCard size={15} />
               <span>Income Portal (₹{incomeData ? incomeData.totalIncomeGenerated.toLocaleString() : '...'})</span>
             </button>
-            <button 
-              onClick={onViewAppointments} 
+            <button
+              onClick={onViewAppointments}
               className="btn btn-cyan btn-sm"
               style={{ fontWeight: '800' }}
             >
@@ -293,7 +293,7 @@ export default function AdminHomePage({
       {/* 3. Executive Action Modules */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.25rem', width: '100%', maxWidth: '100%' }}>
         {/* Module 1 */}
-        <div 
+        <div
           onClick={onViewAppointments}
           className="card"
           style={{ cursor: 'pointer', transition: 'all 0.2s ease', borderColor: 'var(--accent-magenta)' }}
@@ -317,7 +317,7 @@ export default function AdminHomePage({
         </div>
 
         {/* Module 2 */}
-        <div 
+        <div
           onClick={onViewPatients}
           className="card"
           style={{ cursor: 'pointer', transition: 'all 0.2s ease', borderColor: 'var(--accent-purple)' }}
@@ -341,7 +341,7 @@ export default function AdminHomePage({
         </div>
 
         {/* Module 3 */}
-        <div 
+        <div
           onClick={onViewTimings}
           className="card"
           style={{ cursor: 'pointer', transition: 'all 0.2s ease', borderColor: 'var(--accent-gold)' }}
@@ -365,7 +365,7 @@ export default function AdminHomePage({
         </div>
 
         {/* Module 4: Security & Password (Email OTP) */}
-        <div 
+        <div
           onClick={() => setIsSecurityModalOpen(true)}
           className="card"
           style={{ cursor: 'pointer', transition: 'all 0.2s ease', borderColor: 'var(--accent-gold)', background: 'linear-gradient(145deg, rgba(35, 14, 55, 0.6) 0%, rgba(20, 8, 32, 0.8) 100%)' }}
@@ -389,7 +389,7 @@ export default function AdminHomePage({
         </div>
 
         {/* Module 5: Nurse Staff & Portal Management */}
-        <div 
+        <div
           onClick={onViewNurses}
           className="card"
           style={{ cursor: 'pointer', transition: 'all 0.2s ease', borderColor: 'var(--accent-magenta, #d91b76)', background: 'linear-gradient(145deg, rgba(45, 12, 60, 0.6) 0%, rgba(20, 8, 32, 0.8) 100%)' }}
@@ -413,14 +413,14 @@ export default function AdminHomePage({
         </div>
 
         {/* Module 6: Income Generated & Patient Billing Portal */}
-        <div 
+        <div
           onClick={onViewIncome || onViewAppointments}
           className="card"
-          style={{ 
-            cursor: 'pointer', 
-            transition: 'all 0.2s ease', 
-            borderColor: 'var(--accent-gold)', 
-            background: 'linear-gradient(145deg, rgba(45, 30, 10, 0.6) 0%, rgba(20, 8, 32, 0.8) 100%)' 
+          style={{
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            borderColor: 'var(--accent-gold)',
+            background: 'linear-gradient(145deg, rgba(45, 30, 10, 0.6) 0%, rgba(20, 8, 32, 0.8) 100%)'
           }}
         >
           <div style={{
@@ -472,7 +472,7 @@ export default function AdminHomePage({
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {todayAppointments.map((apt) => (
-              <div 
+              <div
                 key={apt.id}
                 style={{
                   display: 'flex',
@@ -518,7 +518,7 @@ export default function AdminHomePage({
       </div>
 
       {/* 5. Clinical Supervision & Staff Duty Log */}
-      <div 
+      <div
         className="card"
         style={{
           display: 'flex',
@@ -549,8 +549,8 @@ export default function AdminHomePage({
         </div>
 
         <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
-          <button 
-            onClick={onViewNurses || onViewAppointments} 
+          <button
+            onClick={onViewNurses || onViewAppointments}
             className="btn btn-cyan btn-sm"
             style={{ fontWeight: '800' }}
           >
@@ -558,8 +558,8 @@ export default function AdminHomePage({
             <span>Manage Nurse Staff &amp; Portal</span>
           </button>
 
-          <button 
-            onClick={onViewAppointments} 
+          <button
+            onClick={onViewAppointments}
             className="btn btn-secondary btn-sm"
           >
             <span>Open Appointments</span>
@@ -590,9 +590,9 @@ export default function AdminHomePage({
                   </p>
                 </div>
               </div>
-              <button 
-                type="button" 
-                onClick={() => setIsSecurityModalOpen(false)} 
+              <button
+                type="button"
+                onClick={() => setIsSecurityModalOpen(false)}
                 className="btn-close"
               >
                 <X size={18} />
@@ -808,9 +808,9 @@ export default function AdminHomePage({
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.5rem' }}>
-                  <button 
-                    type="button" 
-                    onClick={() => setIsSecurityModalOpen(false)} 
+                  <button
+                    type="button"
+                    onClick={() => setIsSecurityModalOpen(false)}
                     className="btn btn-secondary"
                   >
                     Cancel
