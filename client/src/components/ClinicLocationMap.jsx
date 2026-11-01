@@ -232,22 +232,25 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
   };
 
   return (
-    <div style={{
-      borderRadius: 'var(--radius-lg, 12px)',
-      overflow: 'hidden',
-      border: '1px solid var(--border-color)',
-      position: 'relative',
-      background: 'var(--bg-card, #170d24)',
-      boxShadow: '0 8px 30px rgba(0, 0, 0, 0.35)',
-      height: height,
-      minHeight: minHeight,
-      display: 'flex',
-      flexDirection: 'column',
-      width: '100%',
-      maxWidth: '100%',
-      minWidth: 0,
-      boxSizing: 'border-box'
-    }}>
+    <div 
+      className="clinic-map-wrapper"
+      style={{
+        borderRadius: 'var(--radius-lg, 12px)',
+        overflow: 'hidden',
+        border: '1px solid var(--border-color)',
+        position: 'relative',
+        background: 'var(--bg-card, #170d24)',
+        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.35)',
+        height: height,
+        minHeight: minHeight,
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        maxWidth: '100%',
+        minWidth: 0,
+        boxSizing: 'border-box'
+      }}
+    >
       <style>{`
         @keyframes healixPinGlow {
           0% { transform: scale(0.85); opacity: 0.85; }
@@ -388,6 +391,7 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
       {/* Main Map Canvas - 100% Native Vector/Raster Rendering */}
       <div 
         ref={mapContainerRef} 
+        className="clinic-map-canvas"
         style={{ 
           flex: 1, 
           width: '100%', 
@@ -401,20 +405,23 @@ export default function ClinicLocationMap({ height = '100%', minHeight = '420px'
       />
 
       {/* Dedicated Bottom Footer Bar */}
-      <div style={{
-        background: 'rgba(23, 13, 36, 0.98)',
-        padding: '0.55rem 0.85rem',
-        borderTop: '1px solid rgba(217, 27, 118, 0.25)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '0.5rem',
-        flexWrap: 'wrap',
-        zIndex: 10,
-        width: '100%',
-        maxWidth: '100%',
-        boxSizing: 'border-box'
-      }}>
+      <div 
+        className="clinic-map-footer"
+        style={{
+          background: 'rgba(23, 13, 36, 0.98)',
+          padding: '0.55rem 0.85rem',
+          borderTop: '1px solid rgba(217, 27, 118, 0.25)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '0.5rem',
+          flexWrap: 'wrap',
+          zIndex: 10,
+          width: '100%',
+          maxWidth: '100%',
+          boxSizing: 'border-box'
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', minWidth: 0, flex: '1 1 auto' }}>
           <MapPin size={15} color="var(--accent-magenta, #d91b76)" style={{ flexShrink: 0 }} />
           <span style={{ fontSize: '0.74rem', color: '#e2e8f0', fontWeight: '500', wordBreak: 'break-word' }}>

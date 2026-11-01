@@ -48,7 +48,7 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+    <div className="home-page-container">
       {/* Hero Banner with Official Healix Logo */}
       <div className="card hero-card" style={{
         background: 'linear-gradient(135deg, rgba(74, 14, 110, 0.4) 0%, rgba(217, 27, 118, 0.22) 55%, rgba(251, 191, 36, 0.1) 100%)',
@@ -77,31 +77,30 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
               </span>
             </h1>
             
-            <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', margin: '1.25rem 0 2rem 0', lineHeight: '1.6' }}>
+            <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', margin: '1.25rem 0 1.5rem 0', lineHeight: '1.6' }}>
               Evidence-based orthopedic rehabilitation, sports injury reconditioning, post-surgical mobility recovery, and personalized <strong>Home Visit Rehabilitation Services</strong>.
             </p>
 
-            <div className="hero-action-buttons" style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', alignItems: 'center' }}>
-              <button onClick={() => onOpenBooking(false)} className="btn btn-cyan" style={{ padding: '0.85rem 1.6rem', fontSize: '1rem' }}>
-                <Calendar size={20} />
-                <span>Book Clinic Visit</span>
+            <div className="hero-action-buttons">
+              <button onClick={() => onOpenBooking(false)} className="btn btn-cyan">
+                <Calendar size={18} />
+                <span>Book Clinic</span>
               </button>
 
               <button 
                 onClick={() => onOpenBooking(true)} 
-                className="btn btn-admin" 
-                style={{ padding: '0.85rem 1.6rem', fontSize: '1rem' }}
+                className="btn btn-admin"
               >
-                <Home size={20} />
-                <span>Request Home Visit</span>
+                <Home size={18} />
+                <span>Home Visit</span>
               </button>
 
               <button 
                 onClick={onOpenPortalSelect || onOpenPatientAuth} 
                 className="btn btn-secondary" 
-                style={{ padding: '0.85rem 1.4rem', fontSize: '1rem', borderColor: 'rgba(251, 191, 36, 0.45)', color: 'var(--accent-gold)' }}
+                style={{ borderColor: 'rgba(251, 191, 36, 0.45)', color: 'var(--accent-gold)' }}
               >
-                <ShieldCheck size={20} color="var(--accent-gold)" />
+                <ShieldCheck size={18} color="var(--accent-gold)" />
                 <span>Clinic Portals</span>
               </button>
 
@@ -112,9 +111,9 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
                   document.getElementById('clinic-location')?.scrollIntoView({ behavior: 'smooth' });
                 }}
                 className="btn btn-secondary" 
-                style={{ padding: '0.85rem 1.35rem', fontSize: '1rem', textDecoration: 'none' }}
+                style={{ textDecoration: 'none' }}
               >
-                <MapPin size={20} color="var(--accent-magenta)" />
+                <MapPin size={18} color="var(--accent-magenta)" />
                 <span>Clinic Map</span>
               </a>
             </div>
@@ -439,10 +438,10 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
         background: 'linear-gradient(135deg, rgba(74, 14, 110, 0.35), rgba(217, 27, 118, 0.18))',
         borderColor: 'rgba(217, 27, 118, 0.45)'
       }}>
-        <div style={{ marginBottom: '1.75rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+        <div className="clinic-location-header" style={{ marginBottom: '1.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
             <div>
-              <span className="badge badge-cyan" style={{ marginBottom: '0.75rem' }}>
+              <span className="badge badge-cyan" style={{ marginBottom: '0.45rem' }}>
                 📍 Physical Clinic &amp; Location
               </span>
               <h2 style={{ fontSize: '1.85rem', fontWeight: '800', letterSpacing: '-0.01em' }}>
@@ -457,25 +456,25 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
               href="https://maps.app.goo.gl/9ZwbWzGo3AVLExwL9"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-cyan"
+              className="btn btn-cyan clinic-header-map-btn"
               style={{ textDecoration: 'none' }}
             >
-              <Navigation size={18} />
+              <Navigation size={16} />
               <span>Open Google Maps</span>
-              <ExternalLink size={15} />
+              <ExternalLink size={14} />
             </a>
           </div>
         </div>
 
-        <div className="clinic-location-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.5rem', alignItems: 'stretch', width: '100%', maxWidth: '100%', minWidth: 0 }}>
+        <div className="clinic-location-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.25rem', alignItems: 'stretch', width: '100%', maxWidth: '100%', minWidth: 0 }}>
           {/* Clinic Details Card */}
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1.5rem', width: '100%', minWidth: 0, boxSizing: 'border-box' }}>
-            <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', width: '100%', boxSizing: 'border-box' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem', width: '100%', minWidth: 0, boxSizing: 'border-box' }}>
+            <div className="clinic-details-card" style={{ background: 'var(--bg-secondary)', padding: '1.25rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', width: '100%', boxSizing: 'border-box' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.85rem', flexWrap: 'wrap' }}>
                 <div style={{
                   background: 'rgba(217, 27, 118, 0.2)',
                   color: 'var(--healix-magenta)',
-                  padding: '0.75rem',
+                  padding: '0.65rem',
                   borderRadius: 'var(--radius-md)',
                   display: 'flex',
                   alignItems: 'center',
@@ -483,139 +482,106 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
                   flexShrink: 0,
                   boxShadow: '0 4px 12px rgba(219, 39, 119, 0.3)'
                 }}>
-                  <MapPin size={28} />
+                  <MapPin size={24} />
                 </div>
                 <div style={{ minWidth: 0, flex: '1 1 200px' }}>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '0.35rem', wordBreak: 'break-word' }}>
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '0.35rem', wordBreak: 'break-word' }}>
                     Healix Advance Physiotherapy and Rehabilitation Center
                   </h3>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.45', margin: 0 }}>
                     Comprehensive center for specialized Orthopedic rehabilitation, Sports Medicine, Post-Surgical recovery, and Pediatric Physiotherapy.
                   </p>
                   
-                  <p style={{ fontSize: '0.85rem', color: 'var(--accent-gold)', marginTop: '0.5rem', marginBottom: 0, fontWeight: '600', wordBreak: 'break-word' }}>
+                  <p style={{ fontSize: '0.825rem', color: 'var(--accent-gold)', marginTop: '0.45rem', marginBottom: 0, fontWeight: '600', wordBreak: 'break-word' }}>
                     📍 8/207 Pillayar Koil St, Nookampalayam Main Rd, Sithalapakkam, Chennai - 600131
                   </p>
                   
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.85rem', flexWrap: 'wrap' }}>
-                    <span className="badge badge-success" style={{ fontSize: '0.7rem' }}>● Open Today</span>
-                    <span style={{ fontSize: '0.825rem', color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                      <Clock size={14} /> 09:00 AM – 07:00 PM
+                  {/* Integrated Working Timings & Doctor Contact */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
+                    <span className="badge badge-success" style={{ fontSize: '0.68rem', padding: '0.2rem 0.45rem' }}>● Open Today</span>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                      <Clock size={13} color="var(--accent-gold)" /> Mon–Sat: 09:00 AM – 07:00 PM
+                    </span>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                      🚗 Home Visits: 05:00 PM – 07:00 PM
                     </span>
                     <a 
                       href="tel:+917305394549" 
-                      style={{ fontSize: '0.825rem', color: 'var(--accent-cyan)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: '700' }}
+                      style={{ fontSize: '0.8rem', color: 'var(--accent-cyan)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.3rem', fontWeight: '700' }}
                     >
-                      <PhoneCall size={14} /> Doctor: +91 73053 94549
+                      <PhoneCall size={13} /> Doctor: +91 73053 94549
                     </a>
                   </div>
                 </div>
               </div>
 
               {/* Highlights */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 160px), 1fr))', gap: '0.75rem', marginTop: '1.25rem', paddingTop: '1.25rem', borderTop: '1px solid var(--border-color)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                  <CheckCircle2 size={16} color="var(--accent-cyan)" />
+              <div className="clinic-highlights-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 150px), 1fr))', gap: '0.65rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  <CheckCircle2 size={15} color="var(--accent-cyan)" />
                   <span>Dedicated Patient Parking</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                  <CheckCircle2 size={16} color="var(--accent-cyan)" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  <CheckCircle2 size={15} color="var(--accent-cyan)" />
                   <span>Wheelchair &amp; Ramp Access</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                  <CheckCircle2 size={16} color="var(--accent-cyan)" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  <CheckCircle2 size={15} color="var(--accent-cyan)" />
                   <span>Advanced Laser &amp; Ultrasound</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--text-muted)' }}>
-                  <CheckCircle2 size={16} color="var(--accent-cyan)" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                  <CheckCircle2 size={15} color="var(--accent-cyan)" />
                   <span>Home Visit Team Hub</span>
                 </div>
               </div>
             </div>
 
-            {/* Quick Actions */}
-            <div className="clinic-actions-container" style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', width: '100%', boxSizing: 'border-box' }}>
-              <div className="clinic-actions-primary" style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
-                <a
-                  href="https://maps.app.goo.gl/9ZwbWzGo3AVLExwL9"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-cyan"
-                  style={{ flex: '1 1 180px', textDecoration: 'none', minWidth: 0, justifyContent: 'center' }}
-                >
-                  <Navigation size={17} />
-                  <span>Get Driving Directions</span>
-                  <ExternalLink size={14} />
-                </a>
+            {/* Quick Actions (Streamlined, compact 2x2 grid on mobile) */}
+            <div className="clinic-actions-grid">
+              <a
+                href="https://maps.app.goo.gl/9ZwbWzGo3AVLExwL9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-cyan clinic-action-btn"
+                title="Get Driving Directions on Google Maps"
+              >
+                <Navigation size={14} />
+                <span>Directions ↗</span>
+              </a>
 
-                <a
-                  href="tel:+917305394549"
-                  className="btn btn-secondary"
-                  style={{ borderColor: 'rgba(16, 185, 129, 0.5)', color: '#10b981', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', textDecoration: 'none', fontWeight: '700', minWidth: 0, flex: '1 1 180px' }}
-                  title="Call Admin / Doctor Direct"
-                >
-                  <PhoneCall size={17} />
-                  <span>Call Doctor (+91 73053 94549)</span>
-                </a>
-              </div>
+              <a
+                href="tel:+917305394549"
+                className="btn btn-secondary clinic-action-btn clinic-btn-doctor"
+                title="Call Doctor directly (+91 73053 94549)"
+              >
+                <PhoneCall size={14} />
+                <span>Call Doctor</span>
+              </a>
 
-              <div className="clinic-actions-secondary" style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
-                <button
-                  onClick={handleCopyLocation}
-                  className="btn btn-secondary btn-sm"
-                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', minWidth: 0, flex: '1 1 120px' }}
-                  title="Copy Google Maps link"
-                >
-                  {copiedLocation ? <Check size={15} color="var(--accent-green)" /> : <Copy size={15} />}
-                  <span>{copiedLocation ? 'Link Copied!' : 'Copy Maps Link'}</span>
-                </button>
+              <button
+                onClick={handleCopyLocation}
+                className="btn btn-secondary clinic-action-btn"
+                title="Copy Google Maps link to clipboard"
+              >
+                {copiedLocation ? <Check size={14} color="var(--accent-green)" /> : <Copy size={14} />}
+                <span>{copiedLocation ? 'Copied!' : 'Copy GPS'}</span>
+              </button>
 
-                <button
-                  onClick={() => onOpenBooking(false)}
-                  className="btn btn-secondary btn-sm"
-                  style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', minWidth: 0, flex: '1 1 120px' }}
-                >
-                  <Calendar size={15} />
-                  <span>Book Appointment</span>
-                </button>
-              </div>
+              <button
+                onClick={() => onOpenBooking(false)}
+                className="btn btn-secondary clinic-action-btn clinic-btn-book"
+                title="Book Clinical Appointment Slot"
+              >
+                <Calendar size={14} />
+                <span>Book Slot</span>
+              </button>
             </div>
           </div>
 
           {/* Right: Interactive Clinic Location Map */}
           <div style={{ width: '100%', maxWidth: '100%', minWidth: 0, boxSizing: 'border-box' }}>
-            <ClinicLocationMap height="100%" minHeight="360px" />
+            <ClinicLocationMap height="100%" minHeight="300px" />
           </div>
-        </div>
-      </div>
-
-      {/* Operating Hours Banner */}
-      <div className="card" style={{ background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.5rem 2rem', flexWrap: 'wrap', gap: '1rem', borderLeft: '4px solid var(--healix-magenta)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <Clock size={28} color="var(--healix-gold)" />
-          <div>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: '800' }}>Clinic Timings & Working Hours</h3>
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              Monday – Saturday: 09:00 AM – 07:00 PM | Evening Home Visits: 05:00 PM – 07:00 PM
-            </p>
-          </div>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <a
-            href="#clinic-location"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('clinic-location')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="btn btn-secondary btn-sm"
-            style={{ textDecoration: 'none' }}
-          >
-            <MapPin size={15} color="var(--healix-magenta)" />
-            <span>Clinic Map</span>
-          </a>
-          <button onClick={() => onOpenBooking(false)} className="btn btn-cyan btn-sm">
-            <span>Book Slot</span>
-          </button>
         </div>
       </div>
     </div>

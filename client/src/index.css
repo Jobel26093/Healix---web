@@ -882,6 +882,59 @@ select:-webkit-autofill {
   }
 }
 
+/* Base styles for Homepage & Clinic Location Actions */
+.home-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.clinic-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.65rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.75rem;
+}
+
+.clinic-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  height: 38px;
+  min-height: 38px;
+  border-radius: 8px;
+  text-decoration: none;
+  box-sizing: border-box;
+  width: 100%;
+  cursor: pointer;
+}
+
+.clinic-btn-doctor {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+  color: #10b981 !important;
+}
+
+.clinic-btn-doctor:hover {
+  background: rgba(16, 185, 129, 0.15) !important;
+  border-color: #10b981 !important;
+  color: #34d399 !important;
+}
+
+.clinic-btn-book {
+  border-color: var(--accent-cyan) !important;
+  color: var(--accent-cyan) !important;
+}
+
+.clinic-btn-book:hover {
+  background: rgba(6, 182, 212, 0.15) !important;
+}
+
 
 
 
@@ -1101,60 +1154,106 @@ select:-webkit-autofill {
     font-size: 0.7rem !important;
   }
 
-  /* Action Buttons in Hero & Cards */
+  /* Homepage Spacing & Compact Scroll */
+  .home-page-container {
+    gap: 1.25rem !important;
+  }
+
+  /* Action Buttons in Hero: Compact 2x2 Grid */
   .hero-action-buttons {
-    display: flex !important;
-    flex-direction: column !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     width: 100% !important;
-    gap: 0.65rem !important;
+    gap: 0.45rem !important;
   }
 
   .hero-action-buttons .btn {
     width: 100% !important;
+    padding: 0.45rem 0.6rem !important;
+    font-size: 0.8rem !important;
+    height: 38px !important;
+    min-height: 38px !important;
     justify-content: center !important;
+    white-space: nowrap !important;
   }
 
-  /* Clinic Location & Directions Section */
+  /* Clinic Location & Directions Section - Minimal Scroll, Compact Buttons */
   .clinic-location-card {
-    padding: 1.15rem 0.85rem !important;
+    padding: 1rem 0.75rem !important;
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
   }
 
+  .clinic-location-header {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .clinic-header-map-btn {
+    display: none !important;
+  }
+
   .clinic-location-grid {
     display: flex !important;
     flex-direction: column !important;
-    gap: 1.25rem !important;
+    gap: 0.85rem !important;
     width: 100% !important;
     max-width: 100% !important;
   }
 
-  .clinic-actions-primary {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 0.5rem !important;
-    width: 100% !important;
+  .clinic-details-card {
+    padding: 0.95rem 0.75rem !important;
   }
 
-  .clinic-actions-primary .btn {
-    width: 100% !important;
-    justify-content: center !important;
+  .clinic-highlights-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.4rem 0.5rem !important;
+    margin-top: 0.75rem !important;
+    padding-top: 0.75rem !important;
   }
 
-  .clinic-actions-secondary {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 0.5rem !important;
-    width: 100% !important;
+  .clinic-highlights-grid div {
+    font-size: 0.76rem !important;
   }
 
-  .clinic-actions-secondary .btn {
-    flex: 1 1 0 !important;
-    justify-content: center !important;
+  /* Compact 2x2 Quick Actions Bar */
+  .clinic-actions-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.45rem !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-top: 0.45rem !important;
+  }
+
+  .clinic-action-btn {
+    padding: 0.38rem 0.5rem !important;
     font-size: 0.78rem !important;
-    padding: 0.4rem 0.5rem !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    gap: 0.35rem !important;
+    white-space: nowrap !important;
+    border-radius: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    justify-content: center !important;
+  }
+
+  /* Streamlined Mobile Map */
+  .clinic-map-wrapper {
+    min-height: 240px !important;
+    max-height: 270px !important;
+    height: 250px !important;
+  }
+
+  .clinic-map-canvas {
+    min-height: 170px !important;
+    height: 170px !important;
+  }
+
+  .clinic-map-footer {
+    padding: 0.35rem 0.65rem !important;
   }
 
   .home-visit-card {
@@ -1249,5 +1348,16 @@ select:-webkit-autofill {
   .navbar-btn-portals::after {
     content: "Portals" !important;
     font-weight: 700;
+  }
+
+  .clinic-action-btn {
+    font-size: 0.74rem !important;
+    padding: 0.32rem 0.38rem !important;
+    gap: 0.25rem !important;
+  }
+
+  .hero-action-buttons .btn {
+    font-size: 0.76rem !important;
+    padding: 0.4rem 0.45rem !important;
   }
 }
