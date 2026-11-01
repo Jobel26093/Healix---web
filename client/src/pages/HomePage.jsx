@@ -534,47 +534,51 @@ export default function HomePage({ onOpenBooking, onOpenPatientAuth, onOpenAdmin
             </div>
 
             {/* Quick Actions */}
-            <div className="clinic-actions-row" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', width: '100%', boxSizing: 'border-box' }}>
-              <a
-                href="https://maps.app.goo.gl/9ZwbWzGo3AVLExwL9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-cyan"
-                style={{ flex: '1 1 180px', textDecoration: 'none', minWidth: 0 }}
-              >
-                <Navigation size={18} />
-                <span>Get Driving Directions</span>
-                <ExternalLink size={14} />
-              </a>
+            <div className="clinic-actions-container" style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', width: '100%', boxSizing: 'border-box' }}>
+              <div className="clinic-actions-primary" style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+                <a
+                  href="https://maps.app.goo.gl/9ZwbWzGo3AVLExwL9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-cyan"
+                  style={{ flex: '1 1 180px', textDecoration: 'none', minWidth: 0, justifyContent: 'center' }}
+                >
+                  <Navigation size={17} />
+                  <span>Get Driving Directions</span>
+                  <ExternalLink size={14} />
+                </a>
 
-              <a
-                href="tel:+917305394549"
-                className="btn btn-secondary"
-                style={{ borderColor: 'rgba(16, 185, 129, 0.5)', color: '#10b981', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', fontWeight: '700', minWidth: 0, flex: '1 1 200px' }}
-                title="Call Admin / Doctor Direct"
-              >
-                <PhoneCall size={18} />
-                <span>Call Doctor (+91 73053 94549)</span>
-              </a>
+                <a
+                  href="tel:+917305394549"
+                  className="btn btn-secondary"
+                  style={{ borderColor: 'rgba(16, 185, 129, 0.5)', color: '#10b981', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', textDecoration: 'none', fontWeight: '700', minWidth: 0, flex: '1 1 180px' }}
+                  title="Call Admin / Doctor Direct"
+                >
+                  <PhoneCall size={17} />
+                  <span>Call Doctor (+91 73053 94549)</span>
+                </a>
+              </div>
 
-              <button
-                onClick={handleCopyLocation}
-                className="btn btn-secondary"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', minWidth: 0, flex: '1 1 140px' }}
-                title="Copy Google Maps link"
-              >
-                {copiedLocation ? <Check size={18} color="var(--accent-green)" /> : <Copy size={18} />}
-                <span>{copiedLocation ? 'Link Copied!' : 'Copy Maps Link'}</span>
-              </button>
+              <div className="clinic-actions-secondary" style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+                <button
+                  onClick={handleCopyLocation}
+                  className="btn btn-secondary btn-sm"
+                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', minWidth: 0, flex: '1 1 120px' }}
+                  title="Copy Google Maps link"
+                >
+                  {copiedLocation ? <Check size={15} color="var(--accent-green)" /> : <Copy size={15} />}
+                  <span>{copiedLocation ? 'Link Copied!' : 'Copy Maps Link'}</span>
+                </button>
 
-              <button
-                onClick={() => onOpenBooking(false)}
-                className="btn btn-secondary"
-                style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)', minWidth: 0, flex: '1 1 120px' }}
-              >
-                <Calendar size={18} />
-                <span>Book Slot</span>
-              </button>
+                <button
+                  onClick={() => onOpenBooking(false)}
+                  className="btn btn-secondary btn-sm"
+                  style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', minWidth: 0, flex: '1 1 120px' }}
+                >
+                  <Calendar size={15} />
+                  <span>Book Appointment</span>
+                </button>
+              </div>
             </div>
           </div>
 

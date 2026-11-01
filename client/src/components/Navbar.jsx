@@ -111,19 +111,19 @@ export default function Navbar({
               <span>Clinic Home</span>
             </button>
 
-            <button 
-              onClick={() => setActiveTab('login')}
-              className="btn btn-secondary btn-sm"
-              style={{ 
-                borderColor: activeTab === 'login' ? 'var(--accent-gold, #fbbf24)' : 'var(--border-color)',
-                background: activeTab === 'login' ? 'rgba(251, 191, 36, 0.16)' : 'var(--bg-input)',
-                color: activeTab === 'login' ? 'var(--accent-gold)' : 'var(--text-muted)',
-                fontWeight: activeTab === 'login' ? '800' : '600'
+            <a 
+              href="#clinic-location"
+              onClick={(e) => {
+                if (activeTab !== 'home') setActiveTab('home');
+                setTimeout(() => {
+                  document.getElementById('clinic-location')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
               }}
+              className="btn btn-secondary btn-sm"
+              style={{ textDecoration: 'none' }}
             >
-              <ShieldCheck size={14} />
-              <span>Clinic Portals</span>
-            </button>
+              <span>Location &amp; Map</span>
+            </a>
           </>
         ) : isAdmin ? (
           <>
