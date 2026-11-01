@@ -9,7 +9,8 @@
       "fullName": "Dr. Joel Calvin C (Lead Physio)",
       "phone": "+91 73053 94549",
       "role": "ADMIN",
-      "createdAt": "2026-10-01"
+      "createdAt": "2026-10-01",
+      "isPrimaryAdmin": true
     },
     {
       "id": "usr_pat_1",
@@ -65,7 +66,8 @@
       "status": "Active",
       "supervisingDoctor": "Dr. Calvin Joel (Chief Physiotherapist)",
       "createdAt": "2026-10-08T15:47:19.287Z",
-      "notes": "Certified Junior Physiotherapist on morning rehabilitation duty."
+      "notes": "Certified Junior Physiotherapist on morning rehabilitation duty.",
+      "accessLevel": "standard"
     }
   ],
   "clinicTimings": [
@@ -178,7 +180,7 @@
       "patientName": "Jobel Creflo",
       "patientPhone": "+918122555002",
       "serviceName": "Personalized Home Visit Physiotherapy",
-      "date": "2026-10-09",
+      "date": "2026-11-01",
       "timeSlot": "05:00 PM - 06:00 PM (Evening Home Visits)",
       "visitType": "Home-Visit",
       "isHomeVisit": true,

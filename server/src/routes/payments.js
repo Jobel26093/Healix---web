@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
 const { getDB, saveDB, addAuditLog } = require('../db/store');
+const { requirePermission, requireRole, PERMISSIONS, resolveUser } = require('../middleware/roles');
 
 // Default service pricing table (clinical fee schedule)
 const SERVICE_FEE_SCHEDULE = {
@@ -87,8 +88,8 @@ function ensurePaymentsTable(db) {
   return db.payments;
 }
 
-// GET /api/payments/income-summary: Comprehensive revenue metrics & paid vs unpaid patient rosters
-router.get('/income-summary', (req, res) => {
+// GET /api/payments/income-summary: Comprehensive revenue metrics & paid vs unpaid patient rosters (Doctor/Admin only)
+router.get('/income-summary', requirePermission(PERMISSIONS.PAYMENTS_INCOME_SUMMARY), (req, res) => {
   const db = getDB();
   ensurePaymentsTable(db);
 
@@ -333,7 +334,13 @@ router.get('/income-summary', (req, res) => {
 router.get('/', (req, res) => {
   const db = getDB();
   ensurePaymentsTable(db);
-  const { patientId } = req.query;
+  const caller = resolveUser(req);
+  let { patientId } = req.query;
+
+  // Strict RBAC: Patients can strictly view only their own payments/invoices
+  if (caller && caller.role === 'USER') {
+    patientId = caller.id;
+  }
 
   let patientPayments = db.payments;
   let patientAppointments = db.appointments || [];
@@ -531,7 +538,7 @@ router.post('/process', (req, res) => {
 });
 
 // POST /api/payments/collect: Direct payment collection & settlement by Admin / Staff
-router.post('/collect', (req, res) => {
+router.post('/collect', requirePermission(PERMISSIONS.PAYMENTS_COLLECT), (req, res) => {
   const db = getDB();
   ensurePaymentsTable(db);
 

@@ -1,4 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { 
+  hasPermission, 
+  hasRole, 
+  getPermissionsForRole, 
+  PERMISSIONS, 
+  ROLES 
+} from '../services/permissionEngine';
 
 const AuthContext = createContext();
 
@@ -7,6 +14,17 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState('dark');
   const [authError, setAuthError] = useState(null);
+
+  const normalizeUserWithPermissions = (user) => {
+    if (!user) return null;
+    const perms = Array.isArray(user.permissions) && user.permissions.length > 0
+      ? user.permissions
+      : getPermissionsForRole(user.role);
+    return {
+      ...user,
+      permissions: perms
+    };
+  };
 
   const parseJsonSafe = async (res) => {
     try {
@@ -34,7 +52,7 @@ export const AuthProvider = ({ children }) => {
       const res = await fetch('/api/auth/me');
       const data = await parseJsonSafe(res);
       if (data && data.success) {
-        setCurrentUser(data.user);
+        setCurrentUser(normalizeUserWithPermissions(data.user));
       }
     } catch (err) {
       console.error("Failed to fetch session:", err);
@@ -55,7 +73,7 @@ export const AuthProvider = ({ children }) => {
         setAuthError(data.error || "Login failed");
         return false;
       }
-      setCurrentUser(data.user);
+      setCurrentUser(normalizeUserWithPermissions(data.user));
       return true;
     } catch (err) {
       setAuthError(err.message);
@@ -76,7 +94,7 @@ export const AuthProvider = ({ children }) => {
         setAuthError(data.error || "Admin Login failed");
         return false;
       }
-      setCurrentUser(data.user);
+      setCurrentUser(normalizeUserWithPermissions(data.user));
       return true;
     } catch (err) {
       setAuthError(err.message);
@@ -97,7 +115,7 @@ export const AuthProvider = ({ children }) => {
         setAuthError(data.error || "Nurse Login failed");
         return false;
       }
-      setCurrentUser(data.user);
+      setCurrentUser(normalizeUserWithPermissions(data.user));
       return true;
     } catch (err) {
       setAuthError(err.message);
@@ -189,7 +207,7 @@ export const AuthProvider = ({ children }) => {
         setAuthError(data.error || "Registration failed");
         return false;
       }
-      setCurrentUser(data.user);
+      setCurrentUser(normalizeUserWithPermissions(data.user));
       return true;
     } catch (err) {
       setAuthError(err.message);
@@ -234,7 +252,14 @@ export const AuthProvider = ({ children }) => {
       resetPassword,
       logout,
       authError,
-      clearAuthError: () => setAuthError(null)
+      clearAuthError: () => setAuthError(null),
+      // Unified Permission Engine UI Helpers
+      can: (permission, context = {}) => hasPermission(currentUser, permission, context),
+      isRole: (...roles) => hasRole(currentUser, ...roles),
+      permissions: currentUser?.permissions || getPermissionsForRole(currentUser?.role),
+      PERMISSIONS,
+      ROLES,
+      hasPermission: (perm, ctx) => hasPermission(currentUser, perm, ctx)
     }}>
       {children}
     </AuthContext.Provider>

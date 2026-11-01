@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastProvider, useToast } from './context/ToastContext';
+import { PERMISSIONS } from './services/permissionEngine';
 import Navbar from './components/Navbar';
 import BookAppointmentModal from './components/BookAppointmentModal';
 
@@ -14,13 +15,13 @@ import NurseDashboardPage from './pages/NurseDashboardPage';
 import PatientPaymentPortal from './components/PatientPaymentPortal';
 
 function PhysioAppContent() {
-  const { currentUser } = useAuth();
+  const { currentUser, can } = useAuth();
   const toast = useToast();
   const [pendingBooking, setPendingBooking] = useState(null);
   
   // Initialize to the role's dedicated Home Page if logged in, or 'home'
   const [activeTab, setActiveTab] = useState(() => {
-    if (currentUser?.role === 'ADMIN') return 'admin-home';
+    if (currentUser?.role === 'ADMIN' || currentUser?.accessLevel === 'full' || currentUser?.isCoAdmin) return 'admin-home';
     if (currentUser?.role === 'NURSE') return 'nurse-dashboard';
     if (currentUser?.role === 'PATIENT') return 'patient-home';
     return 'home';
@@ -35,7 +36,7 @@ function PhysioAppContent() {
       if (['patient-home', 'patient-dashboard', 'patient-payments', 'nurse-dashboard', 'admin-home', 'admin-dashboard'].includes(activeTab)) {
         setActiveTab('login');
       }
-    } else if (currentUser.role === 'ADMIN') {
+    } else if (isAdmin) {
       if (activeTab === 'login' || activeTab === 'portal' || activeTab === 'home') {
         setActiveTab('admin-home');
       }
@@ -87,6 +88,30 @@ function PhysioAppContent() {
 
   const [refreshKey, setRefreshKey] = useState(0);
   const [adminTab, setAdminTab] = useState('appointments');
+
+  const renderAccessDenied = (requiredRole = 'Doctor / Clinic Administrator') => (
+    <div className="card" style={{ maxWidth: '640px', margin: '4rem auto', textAlign: 'center', padding: '3.5rem 2rem', border: '1px solid var(--border-color)', borderRadius: '1rem', background: 'var(--bg-card)' }}>
+      <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🛡️</div>
+      <h2 style={{ fontSize: '1.45rem', fontWeight: '800', marginBottom: '0.6rem', color: 'var(--accent-magenta, #d91b76)' }}>
+        Access Restricted by Permission Engine
+      </h2>
+      <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginBottom: '1.6rem', lineHeight: '1.6' }}>
+        Your active account role <strong>({currentUser?.role || 'Guest'})</strong> is not permitted to access this clinical workspace. This view requires <strong>{requiredRole}</strong> authorization.
+      </p>
+      <button 
+        className="btn btn-primary"
+        onClick={() => {
+          if (currentUser?.role === 'ADMIN') setActiveTab('admin-home');
+          else if (currentUser?.role === 'NURSE') setActiveTab('nurse-dashboard');
+          else if (currentUser?.role === 'USER') setActiveTab('patient-home');
+          else setActiveTab('home');
+        }}
+        style={{ fontWeight: '700' }}
+      >
+        Return to My Clinical Workspace
+      </button>
+    </div>
+  );
 
   const renderActivePage = () => {
     switch (activeTab) {
@@ -140,6 +165,9 @@ function PhysioAppContent() {
           </div>
         );
       case 'admin-home':
+        if (!can(PERMISSIONS.PATIENTS_MANAGE)) {
+          return renderAccessDenied('Doctor / Clinic Administrator');
+        }
         return (
           <AdminHomePage 
             onViewAppointments={() => { setAdminTab('appointments'); setActiveTab('admin-dashboard'); }} 
@@ -152,6 +180,9 @@ function PhysioAppContent() {
           />
         );
       case 'admin-dashboard':
+        if (!can(PERMISSIONS.PATIENTS_MANAGE)) {
+          return renderAccessDenied('Doctor / Clinic Administrator');
+        }
         return (
           <AdminDashboardPage 
             defaultTab={adminTab}
@@ -159,6 +190,9 @@ function PhysioAppContent() {
           />
         );
       case 'nurse-dashboard':
+        if (!can(PERMISSIONS.APPOINTMENTS_NURSE_NOTES) && currentUser?.role !== 'ADMIN') {
+          return renderAccessDenied('Junior Physiotherapist');
+        }
         return (
           <NurseDashboardPage 
             onOpenNurseAuth={() => { setLoginPortalRole('nurse'); setActiveTab('login'); }}

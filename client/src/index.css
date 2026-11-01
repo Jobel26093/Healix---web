@@ -865,3 +865,216 @@ select:-webkit-autofill {
 
 
 
+
+
+/* ==========================================================================
+   COMPREHENSIVE MOBILE VIEWPORT & RESPONSIVE ALIGNMENT (320px - 768px)
+   ========================================================================== */
+
+/* Desktop defaults for navbar top bar */
+@media (min-width: 769px) {
+  .navbar-top-bar {
+    display: contents;
+  }
+}
+
+/* Universal Mobile Viewport Adjustments */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  .main-layout {
+    padding: 1rem 0.75rem !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+
+  .card {
+    padding: 1rem 0.85rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* Headings & Typography */
+  h1 {
+    font-size: 1.7rem !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  h2 {
+    font-size: 1.35rem !important;
+    line-height: 1.3 !important;
+  }
+
+  h3 {
+    font-size: 1.1rem !important;
+  }
+
+  /* Navbar Mobile Layout: Brand on top-left, controls on top-right, nav tabs scrolling horizontally underneath */
+  .navbar {
+    height: auto !important;
+    min-height: 62px !important;
+    padding: 0.65rem 0.85rem !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+
+  .navbar .navbar-brand {
+    order: 1 !important;
+  }
+
+  .navbar .navbar-controls {
+    order: 2 !important;
+    margin-left: auto !important;
+  }
+
+  .navbar nav,
+  .navbar-nav-scroll {
+    order: 3 !important;
+    width: 100% !important;
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-bottom: 0.25rem !important;
+    gap: 0.35rem !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .navbar nav::-webkit-scrollbar,
+  .navbar-nav-scroll::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .navbar-user-name {
+    max-width: 110px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  /* Navigation Pills & Horizontal Bars */
+  .admin-nav-bar {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    flex-wrap: nowrap !important;
+    padding: 0.4rem !important;
+    gap: 0.35rem !important;
+  }
+
+  .admin-nav-pill {
+    padding: 0.4rem 0.65rem !important;
+    font-size: 0.78rem !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Responsive Grids */
+  .grid-cols-4, 
+  .grid-cols-3, 
+  .grid-cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+  }
+
+  /* Modals on Mobile: Bottom Sheet UX with Smooth Touch Scroll */
+  .modal-overlay {
+    padding: 0.5rem !important;
+    align-items: flex-end !important;
+  }
+
+  .modal-content {
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: 90vh !important;
+    border-radius: 16px 16px 0 0 !important;
+    margin: 0 !important;
+  }
+
+  .modal-header {
+    padding: 1rem !important;
+  }
+
+  .modal-body {
+    padding: 1rem 0.85rem !important;
+  }
+
+  .modal-footer {
+    padding: 0.85rem 1rem !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+  }
+
+  .modal-footer button {
+    flex: 1 1 auto !important;
+    justify-content: center !important;
+  }
+
+  /* Forms & Touch Inputs */
+  .form-input, .form-select, .form-textarea {
+    font-size: 16px !important; /* Prevents auto-zoom on mobile Safari / Chrome */
+  }
+
+  /* Data Tables Mobile Optimization */
+  .table-container {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-radius: var(--radius-md) !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .erp-table {
+    min-width: 640px !important;
+  }
+
+  .erp-table th, 
+  .erp-table td {
+    padding: 0.65rem 0.75rem !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Financial Income Calendar on Mobile */
+  .finance-calendar-grid {
+    gap: 0.25rem !important;
+  }
+
+  .finance-calendar-day {
+    min-height: 60px !important;
+    padding: 0.25rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  /* Action Buttons in Hero & Cards */
+  .hero-action-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 0.65rem !important;
+  }
+
+  .hero-action-buttons .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-layout {
+    padding: 0.75rem 0.5rem !important;
+  }
+
+  h1 {
+    font-size: 1.45rem !important;
+  }
+
+  .btn {
+    padding: 0.45rem 0.75rem !important;
+    font-size: 0.82rem !important;
+  }
+}

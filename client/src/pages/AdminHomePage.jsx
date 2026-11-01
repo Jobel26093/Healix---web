@@ -168,7 +168,7 @@ export default function AdminHomePage({
     fetchAdminData();
   }, []);
 
-  if (!currentUser || currentUser.role !== 'ADMIN') return null;
+  if (!currentUser || (currentUser.role !== 'ADMIN' && currentUser.accessLevel !== 'full' && !currentUser.isCoAdmin)) return null;
 
   const todayStr = new Date().toISOString().split('T')[0];
   const todayAppointments = appointments.filter(a => a.date === todayStr);

@@ -3,13 +3,44 @@ const router = express.Router();
 const { getDB, saveDB, addAuditLog, AUTHORIZED_ADMIN_EMAILS, AUTHORIZED_ADMIN_USERNAMES } = require('../db/store');
 const { generateAndSendOtp, verifyOtp, maskEmail, generateAndSendAdminOtp, verifyAdminOtp } = require('../services/otpService');
 
-// Get active session user profile
+const { getPermissionsForRole, resolveUser, PERMISSIONS } = require('../middleware/permissionEngine');
+
+// Get active session user profile with active permissions
 router.get('/me', (req, res) => {
-  const db = getDB();
-  const sessionUser = db.activeUser;
+  const user = resolveUser(req);
+  if (!user) {
+    return res.json({
+      success: true,
+      user: null
+    });
+  }
   res.json({
     success: true,
-    user: sessionUser
+    user: {
+      ...user,
+      permissions: getPermissionsForRole(user.role)
+    }
+  });
+});
+
+// Explicit permission engine verification endpoint for client UI synchronization
+router.get('/permissions', (req, res) => {
+  const user = resolveUser(req);
+  if (!user) {
+    return res.status(401).json({
+      success: false,
+      error: "Authentication required. Please sign in to verify permissions.",
+      role: null,
+      permissions: []
+    });
+  }
+  res.json({
+    success: true,
+    role: user.role,
+    userId: user.id,
+    fullName: user.fullName,
+    permissions: getPermissionsForRole(user.role),
+    allPermissions: PERMISSIONS
   });
 });
 
@@ -75,7 +106,10 @@ router.post('/register', (req, res) => {
   res.status(201).json({
     success: true,
     message: "Patient account registered successfully!",
-    user: db.activeUser
+    user: {
+      ...db.activeUser,
+      permissions: getPermissionsForRole(db.activeUser.role)
+    }
   });
 });
 
@@ -114,7 +148,10 @@ router.post(['/user-login', '/login'], (req, res) => {
   res.json({
     success: true,
     message: `Welcome back, ${user.fullName}!`,
-    user: db.activeUser
+    user: {
+      ...db.activeUser,
+      permissions: getPermissionsForRole(db.activeUser.role)
+    }
   });
 });
 
@@ -203,7 +240,10 @@ router.post('/admin-login', (req, res) => {
   res.json({
     success: true,
     message: `Administrator authentication granted. Welcome, ${adminUser.fullName}!`,
-    user: db.activeUser
+    user: {
+      ...db.activeUser,
+      permissions: getPermissionsForRole(db.activeUser.role)
+    }
   });
 });
 
@@ -287,7 +327,10 @@ router.post('/nurse-login', (req, res) => {
   res.json({
     success: true,
     message: `Welcome to Nurse Station, ${nurse.fullName}!`,
-    user: db.activeUser
+    user: {
+      ...db.activeUser,
+      permissions: getPermissionsForRole(db.activeUser.role)
+    }
   });
 });
 

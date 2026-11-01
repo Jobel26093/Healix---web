@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
 const NURSE_STATUSES = ['Confirmed', 'Pending Dispatch', 'Completed'];
+const ALL_STATUSES = ['Pending', 'Confirmed', 'Pending Dispatch', 'Completed', 'Cancelled'];
 
 export default function NurseDashboardPage({ onOpenNurseAuth }) {
   const { currentUser } = useAuth();
@@ -222,7 +223,7 @@ export default function NurseDashboardPage({ onOpenNurseAuth }) {
                               value={apt.status}
                               onChange={(e) => updateAppointment(apt.id, { status: e.target.value })}
                             >
-                              {NURSE_STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
+                              {(currentUser?.accessLevel === 'full' ? ALL_STATUSES : NURSE_STATUSES).map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
                           )}
                         </td>

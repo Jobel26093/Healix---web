@@ -26,13 +26,15 @@ export default function Navbar({
   adminTab,
   setAdminTab
 }) {
-  const { currentUser, logout, theme, toggleTheme } = useAuth();
+  const { currentUser, logout, theme, toggleTheme, can, PERMISSIONS } = useAuth();
   const toast = useToast();
 
   const handleLogout = async () => {
     await logout();
     toast.info("You have signed out of your account.", "Signed Out");
   };
+
+  const isAdmin = Boolean(currentUser && (currentUser.role === 'ADMIN' || currentUser.accessLevel === 'full' || currentUser.isCoAdmin));
 
   const handleLogoClick = () => {
     if (!currentUser) {
@@ -91,7 +93,7 @@ export default function Navbar({
       </div>
 
       {/* Center Nav Items: Tailored to each role's Home Page */}
-      <nav style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+      <nav className="navbar-nav-scroll" style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
         {!currentUser ? (
           <>
             <button 
@@ -122,7 +124,7 @@ export default function Navbar({
               <span>Clinic Portals</span>
             </button>
           </>
-        ) : currentUser?.role === 'ADMIN' ? (
+        ) : isAdmin ? (
           <>
             <button 
               onClick={() => setActiveTab('admin-home')}
@@ -280,7 +282,7 @@ export default function Navbar({
         {currentUser ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
             <div style={{ textAlign: 'right', lineHeight: '1.2' }}>
-              <div style={{ fontSize: '0.82rem', fontWeight: '800', whiteSpace: 'nowrap' }}>{currentUser.fullName}</div>
+              <div className="navbar-user-name" style={{ fontSize: '0.82rem', fontWeight: '800' }}>{currentUser.fullName}</div>
               <span className={`badge ${currentUser.role === 'ADMIN' ? 'badge-homevisit' : 'badge-cyan'}`} style={{ fontSize: '0.62rem', padding: '0.12rem 0.4rem' }}>
                 {currentUser.role === 'ADMIN' ? 'Admin' : (currentUser.role === 'NURSE' ? 'Physiotherapist' : 'Patient')}
               </span>

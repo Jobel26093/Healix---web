@@ -40,7 +40,9 @@ router.get('/', requireRole('ADMIN', 'USER'), (req, res) => {
   saveDB(db);
 
   let result = db.appointments || [];
-  const targetPatientId = req.query.patientId || (req.activeUser?.role === 'USER' ? req.activeUser.id : null);
+  const targetPatientId = req.activeUser?.role === 'USER' 
+    ? req.activeUser.id 
+    : (req.query.patientId || null);
 
   if (targetPatientId) {
     const patientUser = (db.users || []).find(u => u.id === targetPatientId) || req.activeUser;
@@ -142,7 +144,7 @@ router.post('/', requireRole('USER', 'ADMIN'), (req, res) => {
     patientName: patientName,
     patientPhone: patientPhone || (db.activeUser ? db.activeUser.phone : "+91 98765 43210"),
     serviceName: serviceName || "General Physiotherapy Consultation",
-    date: date,
+    date: finalDate,
     timeSlot: timeSlot,
     visitType: isHome ? "Home-Visit" : "In-Clinic",
     isHomeVisit: isHome,
@@ -226,7 +228,11 @@ router.patch('/:id/manage', requireRole('ADMIN', 'USER'), (req, res) => {
     apt.timeSlot = timeSlot;
   }
 
-  if (date) apt.date = date;
+  if (date && String(date).trim()) {
+    apt.date = String(date).trim();
+  } else if (!apt.date) {
+    apt.date = new Date().toISOString().split('T')[0];
+  }
   if (serviceName) apt.serviceName = serviceName;
   if (homeAddress !== undefined) apt.homeAddress = homeAddress;
   if (landmark !== undefined) apt.landmark = landmark;

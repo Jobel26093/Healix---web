@@ -1,20 +1,16 @@
 package middleware;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
- * Core business logic for authentication and Role-Based Access Control (RBAC).
- * Mirrors the logic in roles.js:
- *   1. Resolve user ID from header (x-user-id), query param, or active user.
- *   2. Find user by ID, Email, or Username.
- *   3. If ADMIN -> universally allowed.
- *   4. If allowedRoles matches user.role -> allowed.
- *   5. Else -> 403 Forbidden.
+ * Core Role-Based and Permission-Based Access Control Evaluation Service.
+ * Implements centralized enterprise logic for the Healix Physiotherapy system with dynamic access levels.
  */
 public class RoleAuthService {
 
+    /**
+     * Authentication result containing status code, success state, and contextual diagnostic message.
+     */
     public static class AuthResult {
         private final boolean authenticated;
         private final boolean authorized;
@@ -22,7 +18,7 @@ public class RoleAuthService {
         private final String errorMessage;
         private final User user;
 
-        private AuthResult(boolean authenticated, boolean authorized, int statusCode, String errorMessage, User user) {
+        public AuthResult(boolean authenticated, boolean authorized, int statusCode, String errorMessage, User user) {
             this.authenticated = authenticated;
             this.authorized = authorized;
             this.statusCode = statusCode;
@@ -65,17 +61,80 @@ public class RoleAuthService {
     }
 
     /**
+     * Return list of permissions granted to a given role
+     */
+    public static Set<Permission> getPermissionsForRole(Role role) {
+        if (role == null) return Collections.emptySet();
+        switch (role) {
+            case ADMIN:
+                return EnumSet.allOf(Permission.class);
+            case NURSE:
+                return EnumSet.of(
+                    Permission.APPOINTMENTS_VIEW,
+                    Permission.APPOINTMENTS_SET_STATUS,
+                    Permission.APPOINTMENTS_NURSE_NOTES,
+                    Permission.PATIENTS_VIEW_CLINICAL,
+                    Permission.NURSES_VIEW,
+                    Permission.TIMINGS_VIEW
+                );
+            case USER:
+                return EnumSet.of(
+                    Permission.APPOINTMENTS_VIEW,
+                    Permission.APPOINTMENTS_CREATE,
+                    Permission.APPOINTMENTS_MANAGE,
+                    Permission.APPOINTMENTS_CANCEL,
+                    Permission.APPOINTMENTS_DELETE,
+                    Permission.PAYMENTS_VIEW_OWN,
+                    Permission.PAYMENTS_PROCESS,
+                    Permission.TIMINGS_VIEW
+                );
+            default:
+                return Collections.emptySet();
+        }
+    }
+
+    /**
+     * Check if user possesses a granular permission, factoring in dynamic access level and co-admin privileges.
+     */
+    public static boolean hasPermission(User user, Permission permission) {
+        if (user == null || permission == null) return false;
+        // Admin, Full Access nurse, or Co-Admin has universal authority across all permissions
+        if (user.getRole() == Role.ADMIN || "full".equalsIgnoreCase(user.getAccessLevel()) || user.isCoAdmin()) {
+            return true;
+        }
+        // Custom granular permission overrides
+        if (user.getCustomPermissions() != null && !user.getCustomPermissions().isEmpty()) {
+            return user.getCustomPermissions().contains(permission);
+        }
+        return getPermissionsForRole(user.getRole()).contains(permission);
+    }
+
+    /**
+     * Evaluates permission requirement for a user.
+     */
+    public static AuthResult checkPermission(User user, Permission permission) {
+        if (user == null) {
+            return AuthResult.unauthorized("Authentication required. Please log in to continue.");
+        }
+        if (hasPermission(user, permission)) {
+            return AuthResult.success(user);
+        }
+        return AuthResult.forbidden(
+            "Access denied: your account (" + user.getRole() + ") lacks permission '" + permission.getValue() + "'."
+        );
+    }
+
+    /**
      * Evaluates whether the requested user has permission for the specified allowed roles.
-     * Equivalent to:
-     *   if (user.role === 'ADMIN' || allowedRoles.includes(user.role))
+     * Factors in dynamic full-access and co-admin authority.
      */
     public static AuthResult checkPermission(User user, Role... allowedRoles) {
         if (user == null) {
             return AuthResult.unauthorized("Please log in to continue.");
         }
 
-        // Admin has universal authority across all endpoints
-        if (user.getRole() == Role.ADMIN) {
+        // Admin or Full-Access Co-Admin has universal authority across all endpoints
+        if (user.getRole() == Role.ADMIN || "full".equalsIgnoreCase(user.getAccessLevel()) || user.isCoAdmin()) {
             return AuthResult.success(user);
         }
 

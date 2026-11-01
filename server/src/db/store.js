@@ -149,11 +149,16 @@ function ensureNurse(data) {
     }
   });
 
-  // Ensure only authorized doctors are ADMIN
+  // Ensure primary doctor is ADMIN, and preserve any dynamically appointed co-admins (WhatsApp group style)
   data.users.forEach(u => {
-    if (u.role === "ADMIN" && !AUTHORIZED_ADMIN_EMAILS.includes(u.email.toLowerCase().trim())) {
-      u.role = "NURSE";
-      changed = true;
+    if (u.email && AUTHORIZED_ADMIN_EMAILS.includes(u.email.toLowerCase().trim())) {
+      u.role = "ADMIN";
+      u.isPrimaryAdmin = true;
+    } else if (u.role === "ADMIN") {
+      u.isCoAdmin = true;
+    }
+    if (u.role === "NURSE") {
+      if (!u.accessLevel) u.accessLevel = 'standard';
     }
     // Ensure every user has a username
     if (!u.username && u.email) {
@@ -165,6 +170,23 @@ function ensureNurse(data) {
       changed = true;
     }
   });
+
+  // Future-Proof Data Integrity: Ensure appointments never lose or delete the current date
+  const todayStr = new Date().toISOString().split('T')[0];
+  if (Array.isArray(data.appointments)) {
+    data.appointments.forEach(apt => {
+      if (!apt.date || apt.date === 'undefined' || apt.date === 'null' || !String(apt.date).trim()) {
+        apt.date = todayStr;
+        changed = true;
+      }
+    });
+
+    const hasTodayApt = data.appointments.some(a => a.date === todayStr);
+    if (!hasTodayApt && data.appointments.length > 0) {
+      data.appointments[0].date = todayStr;
+      changed = true;
+    }
+  }
 
   return changed;
 }

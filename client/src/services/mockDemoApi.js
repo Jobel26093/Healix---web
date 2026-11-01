@@ -3,6 +3,14 @@
 // If the backend is unreachable or hosted on static servers (e.g. GitHub Pages),
 // this interceptor automatically handles REST calls with an in-memory & localStorage clinical state.
 
+import { 
+  hasPermission, 
+  getPermissionsForRole, 
+  PERMISSIONS, 
+  ROLES, 
+  NURSE_ALLOWED_STATUSES 
+} from './permissionEngine';
+
 const STORAGE_KEY = 'healix_clinical_db_v2';
 const ACTIVE_USER_KEY = 'healix_active_user_v2';
 
@@ -271,10 +279,36 @@ export async function handleMockApiRequest(url, options = {}) {
 
   const db = getLocalDB();
 
+  // Resolve caller from headers or active session
+  const active = getActiveUser();
+  let callerHeaderId = null;
+  if (options.headers) {
+    if (typeof options.headers.get === 'function') {
+      callerHeaderId = options.headers.get('x-user-id');
+    } else if (typeof options.headers === 'object') {
+      callerHeaderId = options.headers['x-user-id'] || options.headers['X-User-Id'];
+    }
+  }
+  const caller = (callerHeaderId && db.users.find(u => u.id === callerHeaderId)) || active;
+  const callerWithPerms = caller ? { ...caller, permissions: getPermissionsForRole(caller.role) } : null;
+
   // 1. AUTH ROUTES
   if (pathname === '/api/auth/me') {
-    const active = getActiveUser();
-    return mockResponse({ success: true, user: active });
+    return mockResponse({ success: true, user: callerWithPerms });
+  }
+
+  if (pathname === '/api/auth/permissions') {
+    if (!caller) {
+      return mockResponse({ success: false, error: 'Authentication required. Please sign in.', role: null, permissions: [] }, 401);
+    }
+    return mockResponse({
+      success: true,
+      role: caller.role,
+      userId: caller.id,
+      fullName: caller.fullName,
+      permissions: getPermissionsForRole(caller.role),
+      allPermissions: PERMISSIONS
+    });
   }
 
   if (pathname === '/api/auth/user-login') {
@@ -288,8 +322,9 @@ export async function handleMockApiRequest(url, options = {}) {
     if (!user || (body.password !== user.password && body.password !== '1234' && body.password !== 'HealthyPatient2026')) {
       return mockResponse({ success: false, error: 'Invalid patient username/email or password (Demo: 1234)' }, 401);
     }
-    setActiveUser(user);
-    return mockResponse({ success: true, user });
+    const userWithPerms = { ...user, permissions: getPermissionsForRole(user.role) };
+    setActiveUser(userWithPerms);
+    return mockResponse({ success: true, user: userWithPerms });
   }
 
   if (pathname === '/api/auth/admin-login') {
@@ -297,8 +332,9 @@ export async function handleMockApiRequest(url, options = {}) {
     const admin = db.users.find(u => u.role === 'ADMIN');
     if ((identifier === 'drcalvin' || identifier === admin.email.toLowerCase()) && 
         (body.password === admin.password || body.password === '1234' || body.password === 'adminpassword123')) {
-      setActiveUser(admin);
-      return mockResponse({ success: true, user: admin });
+      const adminWithPerms = { ...admin, permissions: getPermissionsForRole(admin.role) };
+      setActiveUser(adminWithPerms);
+      return mockResponse({ success: true, user: adminWithPerms });
     }
     return mockResponse({ success: false, error: 'Invalid Doctor / Admin credentials (Demo: drcalvin / 1234)' }, 401);
   }
@@ -316,8 +352,9 @@ export async function handleMockApiRequest(url, options = {}) {
     if (!nurse || (body.password !== nurse.password && body.password !== '1234')) {
       return mockResponse({ success: false, error: 'Invalid Junior Physiotherapist credentials (Demo: paulinecharles11995 / 1234)' }, 401);
     }
-    setActiveUser(nurse);
-    return mockResponse({ success: true, user: nurse });
+    const nurseWithPerms = { ...nurse, permissions: getPermissionsForRole(nurse.role) };
+    setActiveUser(nurseWithPerms);
+    return mockResponse({ success: true, user: nurseWithPerms });
   }
 
   if (pathname === '/api/auth/logout') {
@@ -346,8 +383,9 @@ export async function handleMockApiRequest(url, options = {}) {
     };
     db.users.push(newPatient);
     saveLocalDB(db);
-    setActiveUser(newPatient);
-    return mockResponse({ success: true, user: newPatient });
+    const patWithPerms = { ...newPatient, permissions: getPermissionsForRole(newPatient.role) };
+    setActiveUser(patWithPerms);
+    return mockResponse({ success: true, user: patWithPerms });
   }
 
   if (pathname === '/api/auth/reset-password' || pathname === '/api/auth/update-admin-password') {
@@ -360,6 +398,9 @@ export async function handleMockApiRequest(url, options = {}) {
       return mockResponse(db.clinicTimings);
     }
     if (method === 'POST') {
+      if (!hasPermission(caller, PERMISSIONS.TIMINGS_MANAGE)) {
+        return mockResponse({ success: false, error: 'Access denied: Timing creation is restricted to Doctor / Admin.' }, 403);
+      }
       const newSlot = {
         id: `slot-${Date.now()}`,
         day: body.day || "Monday - Saturday",
@@ -375,6 +416,9 @@ export async function handleMockApiRequest(url, options = {}) {
   }
 
   if (pathname.match(/^\/api\/timings\/([^/]+)\/toggle$/)) {
+    if (!hasPermission(caller, PERMISSIONS.TIMINGS_MANAGE)) {
+      return mockResponse({ success: false, error: 'Access denied: Timing modification is restricted to Doctor / Admin.' }, 403);
+    }
     const slotId = pathname.split('/')[3];
     const slot = db.clinicTimings.find(s => s.id === slotId);
     if (slot) {
@@ -388,18 +432,22 @@ export async function handleMockApiRequest(url, options = {}) {
   // 3. APPOINTMENTS ROUTES
   if (pathname === '/api/appointments') {
     if (method === 'GET') {
-      const patientId = searchParams.get('patientId');
-      if (patientId) {
-        return mockResponse(db.appointments.filter(a => a.patientId === patientId));
+      // Scoped permissions: Patients can only view their own bookings
+      let targetPatientId = searchParams.get('patientId');
+      if (caller?.role === 'USER') {
+        targetPatientId = caller.id;
+      }
+      if (targetPatientId) {
+        return mockResponse(db.appointments.filter(a => a.patientId === targetPatientId || (caller && a.patientPhone === caller.phone)));
       }
       return mockResponse(db.appointments);
     }
     if (method === 'POST') {
       const newApt = {
         id: `apt-${Date.now()}`,
-        patientId: body.patientId,
-        patientName: body.patientName || 'Registered Patient',
-        patientPhone: body.patientPhone || '+91 73053 94549',
+        patientId: body.patientId || (caller ? caller.id : 'usr_pat_1'),
+        patientName: body.patientName || (caller ? caller.fullName : 'Registered Patient'),
+        patientPhone: body.patientPhone || (caller ? caller.phone : '+91 73053 94549'),
         serviceName: body.serviceName || 'General Physiotherapy',
         date: body.date,
         timeSlot: body.timeSlot,
@@ -429,6 +477,9 @@ export async function handleMockApiRequest(url, options = {}) {
     const id = pathname.split('/')[3];
     const apt = db.appointments.find(a => a.id === id);
     if (apt) {
+      if (!hasPermission(caller, PERMISSIONS.APPOINTMENTS_SET_STATUS, { status: body.status })) {
+        return mockResponse({ success: false, error: `Access denied: Role (${caller?.role || 'Guest'}) lacks permission to assign status '${body.status}'.` }, 403);
+      }
       apt.status = body.status;
       saveLocalDB(db);
       return mockResponse({ success: true, appointment: apt });
@@ -437,6 +488,9 @@ export async function handleMockApiRequest(url, options = {}) {
   }
 
   if (pathname.match(/^\/api\/appointments\/([^/]+)\/amount$/)) {
+    if (!hasPermission(caller, PERMISSIONS.APPOINTMENTS_SET_AMOUNT)) {
+      return mockResponse({ success: false, error: 'Access denied: Only attending Doctor can set consultation fee.' }, 403);
+    }
     const id = pathname.split('/')[3];
     const apt = db.appointments.find(a => a.id === id);
     if (apt) {
@@ -481,8 +535,11 @@ export async function handleMockApiRequest(url, options = {}) {
     return mockResponse({ success: true });
   }
 
-  // 4. PATIENTS ROUTES
+  // 4. PATIENTS ROUTES (Doctor / Admin only)
   if (pathname === '/api/patients') {
+    if (!hasPermission(caller, PERMISSIONS.PATIENTS_MANAGE)) {
+      return mockResponse({ success: false, error: 'Access denied: Patient administration requires Doctor / Admin credentials.' }, 403);
+    }
     if (method === 'GET') {
       return mockResponse(db.users.filter(u => u.role === 'USER'));
     }
@@ -507,6 +564,9 @@ export async function handleMockApiRequest(url, options = {}) {
   }
 
   if (pathname.match(/^\/api\/patients\/([^/]+)$/)) {
+    if (!hasPermission(caller, PERMISSIONS.PATIENTS_MANAGE)) {
+      return mockResponse({ success: false, error: 'Access denied: Patient modifications require Doctor / Admin credentials.' }, 403);
+    }
     const id = pathname.split('/')[3];
     if (method === 'PUT') {
       const idx = db.users.findIndex(u => u.id === id);
@@ -516,6 +576,26 @@ export async function handleMockApiRequest(url, options = {}) {
         return mockResponse({ success: true, patient: db.users[idx] });
       }
     }
+
+    if (pathname.includes('/access-level') && method === 'PATCH') {
+      const nurse = db.users.find(u => u.id === id);
+      if (!nurse) return mockResponse({ success: false, error: 'Nurse not found' }, 404);
+      const isFull = body.accessLevel === 'full';
+      nurse.accessLevel = isFull ? 'full' : 'standard';
+      nurse.isCoAdmin = isFull;
+      nurse.permissions = isFull ? Object.values(PERMISSIONS) : getPermissionsForRole('NURSE');
+      saveLocalDB(db);
+      return mockResponse({ success: true, message: `Nurse ${nurse.fullName} updated to ${isFull ? 'Full Admin Access' : 'Standard Access'}.`, nurse });
+    }
+
+    if (pathname.includes('/permissions') && method === 'PATCH') {
+      const nurse = db.users.find(u => u.id === id);
+      if (!nurse) return mockResponse({ success: false, error: 'Staff member not found' }, 404);
+      nurse.permissions = Array.isArray(body.permissions) ? body.permissions : [];
+      saveLocalDB(db);
+      return mockResponse({ success: true, message: `Permissions updated for ${nurse.fullName}.`, nurse });
+    }
+
     if (method === 'DELETE') {
       db.users = db.users.filter(u => u.id !== id);
       saveLocalDB(db);
@@ -523,8 +603,92 @@ export async function handleMockApiRequest(url, options = {}) {
     }
   }
 
+
+  // 4B. WHATSAPP GROUP STYLE ADMIN MANAGEMENT & DYNAMIC PERMISSIONS
+  if (pathname === '/api/admin/admins') {
+    const admins = db.users
+      .filter(u => u.role === 'ADMIN' || u.accessLevel === 'full' || u.isCoAdmin)
+      .map(u => ({
+        id: u.id,
+        fullName: u.fullName,
+        username: u.username,
+        email: u.email,
+        phone: u.phone || '',
+        role: u.role,
+        accessLevel: u.accessLevel || 'full',
+        isPrimaryAdmin: u.email === 'calvinjoelc@gmail.com' || u.username === 'drcalvin',
+        isCoAdmin: Boolean(u.isCoAdmin || (u.role === 'ADMIN' && u.username !== 'drcalvin')),
+        promotedAt: u.promotedAt || null,
+        promotedBy: u.promotedBy || null,
+        status: u.status || 'Active'
+      }));
+
+    const eligibleUsers = db.users
+      .filter(u => u.role !== 'ADMIN' && u.accessLevel !== 'full' && !u.isCoAdmin)
+      .map(u => ({
+        id: u.id,
+        fullName: u.fullName,
+        username: u.username,
+        email: u.email,
+        phone: u.phone || '',
+        role: u.role,
+        status: u.status || 'Active'
+      }));
+
+    return mockResponse({ success: true, totalAdmins: admins.length, admins, eligibleUsers });
+  }
+
+  if (pathname === '/api/admin/make-admin') {
+    const { userId } = body;
+    const targetUser = db.users.find(u => u.id === userId);
+    if (!targetUser) {
+      return mockResponse({ success: false, error: 'Member not found in clinic records.' }, 404);
+    }
+    targetUser.previousRole = targetUser.role;
+    targetUser.role = 'ADMIN';
+    targetUser.isCoAdmin = true;
+    targetUser.accessLevel = 'full';
+    targetUser.promotedAt = new Date().toISOString();
+    targetUser.promotedBy = caller?.fullName || 'Lead Admin';
+    targetUser.permissions = Object.values(PERMISSIONS);
+    saveLocalDB(db);
+
+    return mockResponse({
+      success: true,
+      message: `${targetUser.fullName} has been made a Clinic Administrator with full access!`,
+      user: targetUser
+    });
+  }
+
+  if (pathname === '/api/admin/dismiss-admin') {
+    const { userId } = body;
+    const targetUser = db.users.find(u => u.id === userId);
+    if (!targetUser) {
+      return mockResponse({ success: false, error: 'Member record not found.' }, 404);
+    }
+    if (targetUser.email === 'calvinjoelc@gmail.com' || targetUser.username === 'drcalvin') {
+      return mockResponse({ success: false, error: 'The Lead Chief Doctor & Primary Administrator cannot be dismissed.' }, 403);
+    }
+    const revertedRole = targetUser.previousRole || (targetUser.id.startsWith('NURSE_') ? 'NURSE' : 'USER');
+    targetUser.role = revertedRole;
+    targetUser.isCoAdmin = false;
+    targetUser.accessLevel = 'standard';
+    targetUser.permissions = getPermissionsForRole(revertedRole);
+    targetUser.dismissedAt = new Date().toISOString();
+    saveLocalDB(db);
+
+    return mockResponse({
+      success: true,
+      message: `${targetUser.fullName} has been dismissed as Administrator and returned to ${revertedRole} status.`,
+      user: targetUser
+    });
+  }
+
   // 5. NURSES / PHYSIOTHERAPISTS ROUTES
   if (pathname === '/api/admin/nurses') {
+    if (!hasPermission(caller, PERMISSIONS.NURSES_MANAGE)) {
+      return mockResponse({ success: false, error: 'Access denied: Nurse Station administration is restricted to Doctor / Admin.' }, 403);
+    }
     if (method === 'GET') {
       return mockResponse(db.users.filter(u => u.role === 'NURSE'));
     }
@@ -550,6 +714,9 @@ export async function handleMockApiRequest(url, options = {}) {
   }
 
   if (pathname.match(/^\/api\/admin\/nurses\/([^/?]+)/)) {
+    if (!hasPermission(caller, PERMISSIONS.NURSES_MANAGE)) {
+      return mockResponse({ success: false, error: 'Access denied: Nurse roster management is restricted to Doctor / Admin.' }, 403);
+    }
     const id = pathname.split('/')[4].split('?')[0];
     if (method === 'DELETE') {
       const nurse = db.users.find(u => u.id === id);
@@ -566,19 +733,33 @@ export async function handleMockApiRequest(url, options = {}) {
   }
 
   if (pathname === '/api/nurse/appointments') {
+    if (caller?.role !== 'NURSE' && caller?.role !== 'ADMIN') {
+      return mockResponse({ success: false, error: 'Access denied: Nurse Station authorization required.' }, 403);
+    }
     return mockResponse(db.appointments);
   }
 
   if (pathname === '/api/nurse/patients') {
+    if (caller?.role !== 'NURSE' && caller?.role !== 'ADMIN') {
+      return mockResponse({ success: false, error: 'Access denied: Nurse Station authorization required.' }, 403);
+    }
     return mockResponse(db.users.filter(u => u.role === 'USER'));
   }
 
   if (pathname.match(/^\/api\/nurse\/appointments\/([^/]+)$/) && method === 'PATCH') {
+    if (caller?.role !== 'NURSE' && caller?.role !== 'ADMIN') {
+      return mockResponse({ success: false, error: 'Access denied: Nurse Station authorization required.' }, 403);
+    }
     const id = pathname.split('/')[4];
     const apt = db.appointments.find(a => a.id === id);
     if (apt) {
       if (body.notes) apt.notes = body.notes;
-      if (body.status) apt.status = body.status;
+      if (body.status) {
+        if (!NURSE_ALLOWED_STATUSES.includes(body.status) && caller.role !== 'ADMIN') {
+          return mockResponse({ success: false, error: `Nurses can only set status to: ${NURSE_ALLOWED_STATUSES.join(', ')}.` }, 403);
+        }
+        apt.status = body.status;
+      }
       saveLocalDB(db);
       return mockResponse({ success: true, appointment: apt });
     }
@@ -587,14 +768,20 @@ export async function handleMockApiRequest(url, options = {}) {
 
   // 6. PAYMENTS ROUTES
   if (pathname === '/api/payments') {
-    const patientId = searchParams.get('patientId');
+    let patientId = searchParams.get('patientId');
+    if (caller?.role === 'USER') {
+      patientId = caller.id;
+    }
     if (patientId) {
-      return mockResponse(db.payments.filter(p => p.patientId === patientId));
+      return mockResponse(db.payments.filter(p => p.patientId === patientId || (caller && p.patientPhone === caller.phone)));
     }
     return mockResponse(db.payments);
   }
 
   if (pathname === '/api/payments/income-summary') {
+    if (!hasPermission(caller, PERMISSIONS.PAYMENTS_INCOME_SUMMARY)) {
+      return mockResponse({ success: false, error: 'Access denied: Revenue tracking is restricted to Doctor / Admin.' }, 403);
+    }
     const totalRevenue = db.payments.reduce((acc, p) => acc + (p.amount || 0), 0);
     const pendingDues = db.appointments
       .filter(a => a.paymentStatus === 'DUE')
@@ -621,6 +808,12 @@ export async function handleMockApiRequest(url, options = {}) {
       },
       recentSettlements: db.payments.slice(0, 5)
     });
+  }
+
+  if (pathname === '/api/payments/collect') {
+    if (!hasPermission(caller, PERMISSIONS.PAYMENTS_COLLECT)) {
+      return mockResponse({ success: false, error: 'Access denied: Direct payment collection is restricted to Doctor / Admin.' }, 403);
+    }
   }
 
   if (pathname === '/api/payments/collect' || pathname === '/api/payments/process') {
@@ -679,8 +872,21 @@ export function setupMockApiInterceptor() {
   window.fetch = async function (input, init) {
     const url = typeof input === 'string' ? input : (input && input.url ? input.url : '');
 
-    // Only intercept /api/ routes
+    // Automatically inject active user auth credentials into all outgoing /api/ requests
     if (url.startsWith('/api') || url.includes('/api/')) {
+      const activeUser = getActiveUser();
+      if (activeUser && activeUser.id) {
+        init = init || {};
+        const headers = new Headers(init.headers || {});
+        if (!headers.has('x-user-id')) {
+          headers.set('x-user-id', activeUser.id);
+        }
+        if (!headers.has('x-user-role')) {
+          headers.set('x-user-role', activeUser.role);
+        }
+        init.headers = headers;
+      }
+
       const isGitHubPages = window.location.hostname.includes('github.io');
 
       // If hosted on GitHub Pages, directly use mock API

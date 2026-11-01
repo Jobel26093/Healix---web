@@ -10,6 +10,7 @@ const timingsRoutes = require('./routes/timings');
 const nurseRoutes = require('./routes/nurse');
 const paymentsRoutes = require('./routes/payments');
 const adminNursesRoutes = require('./routes/adminNurses');
+const adminRoutes = require('./routes/admin');
 const mapRoutes = require('./routes/map');
 
 const app = express();
@@ -67,6 +68,7 @@ app.use('/api/appointments', appointmentsRoutes);
 app.use('/api/timings', timingsRoutes);
 app.use('/api/nurse', nurseRoutes);
 app.use('/api/payments', paymentsRoutes);
+app.use('/api/admin', adminRoutes);
 app.use('/api/admin/nurses', adminNursesRoutes);
 app.use('/api/map', mapRoutes);
 

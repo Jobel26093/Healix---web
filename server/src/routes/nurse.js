@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getDB, saveDB, addAuditLog } = require('../db/store');
 
-// Statuses a nurse may set (nurses cannot cancel or delete bookings)
-const NURSE_ALLOWED_STATUSES = ["Confirmed", "Pending Dispatch", "Completed"];
+const { resolveUser, NURSE_ALLOWED_STATUSES, PERMISSIONS } = require('../middleware/roles');
 
 // Public endpoint: Fetch active clinic nurses added by the doctor (for homepage team display)
 router.get('/public-roster', (req, res) => {
@@ -20,19 +19,15 @@ router.get('/public-roster', (req, res) => {
   res.json({ success: true, nurses: activeNurses });
 });
 
-// Only a logged-in nurse may use these endpoints
+// Only a logged-in nurse or supervising doctor may use these endpoints
 function requireNurse(req, res, next) {
   const db = getDB();
-  const active = db.activeUser;
-  if (!active || active.role !== "NURSE") {
+  const user = resolveUser(req);
+  if (!user || (user.role !== "NURSE" && user.role !== "ADMIN")) {
     return res.status(403).json({ success: false, error: "Nurse authorization required." });
   }
-  const nurse = db.users.find(u => u.id === active.id);
-  if (!nurse) {
-    return res.status(403).json({ success: false, error: "Nurse account not found." });
-  }
   req.db = db;
-  req.nurse = nurse;
+  req.nurse = user;
   next();
 }
 

@@ -378,7 +378,7 @@ export default function AdminDashboardPage({ onOpenAdminAuth, defaultTab = 'appo
     }
   }, [currentUser]);
 
-  if (!currentUser || currentUser.role !== 'ADMIN') {
+  if (!currentUser || (currentUser.role !== 'ADMIN' && currentUser.accessLevel !== 'full' && !currentUser.isCoAdmin)) {
     return (
       <div className="card" style={{ padding: '3rem', textAlign: 'center', borderColor: 'var(--accent-red)' }}>
         <ShieldCheck size={48} color="var(--accent-red)" style={{ margin: '0 auto 1rem auto' }} />
@@ -846,7 +846,7 @@ export default function AdminDashboardPage({ onOpenAdminAuth, defaultTab = 'appo
   const handleOpenManageSlotModal = (apt) => {
     setManagingSlotApt(apt);
     setManageSlotForm({
-      date: apt.date || '',
+      date: apt.date || new Date().toISOString().split('T')[0],
       timeSlot: apt.timeSlot || '',
       serviceName: apt.serviceName || 'General Physiotherapy Consultation',
       visitType: apt.isHomeVisit ? 'Home-Visit' : 'In-Clinic',
@@ -883,7 +883,7 @@ export default function AdminDashboardPage({ onOpenAdminAuth, defaultTab = 'appo
         method: 'PATCH',
         headers: authHeaders,
         body: JSON.stringify({
-          date: manageSlotForm.date,
+          date: manageSlotForm.date || managingSlotApt?.date || new Date().toISOString().split('T')[0],
           timeSlot: manageSlotForm.timeSlot,
           serviceName: manageSlotForm.serviceName,
           homeAddress: isHome ? manageSlotForm.homeAddress.trim() : '',
@@ -2605,6 +2605,294 @@ export default function AdminDashboardPage({ onOpenAdminAuth, defaultTab = 'appo
             </div>
           </form>
         )}
+      </ModalOverlay>
+
+
+      {/* ========================================================= */}
+      {/* MODAL 9: WHATSAPP-STYLE MAKE ANOTHER ADMIN MODAL           */}
+      {/* ========================================================= */}
+      <ModalOverlay
+        isOpen={isMakeAdminModalOpen}
+        onClose={() => setIsMakeAdminModalOpen(false)}
+        title="Appoint Another Admin (WhatsApp Group Style)"
+        subtitle="Select any registered member or nurse to make them a Clinic Administrator with full privileges"
+        icon={Crown}
+        iconColor="#fbbf24"
+        borderColor="#fbbf24"
+        maxWidth="680px"
+      >
+        <div className="modal-body" style={{ padding: '1rem 0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div style={{ background: 'rgba(251, 191, 36, 0.08)', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid rgba(251, 191, 36, 0.25)', fontSize: '0.8rem', color: '#fbbf24' }}>
+            💡 <strong>WhatsApp Group Co-Admin Protocol:</strong> Appointed Administrators gain immediate co-admin access to appointments, financial reports, slot scheduling, and patient charts. Any administrator can also dismiss co-admins at any time.
+          </div>
+
+          <div className="form-group" style={{ margin: 0 }}>
+            <label className="form-label">Search Member / Staff</label>
+            <div style={{ position: 'relative' }}>
+              <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+              <input
+                type="text"
+                className="form-input"
+                style={{ paddingLeft: '38px' }}
+                placeholder="Search by full name, email, or @username..."
+                value={adminSearchQuery}
+                onChange={e => setAdminSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div style={{ maxHeight: '340px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            {eligibleUsers
+              .filter(u => {
+                if (!adminSearchQuery) return true;
+                const q = adminSearchQuery.toLowerCase();
+                return (u.fullName && u.fullName.toLowerCase().includes(q)) ||
+                  (u.email && u.email.toLowerCase().includes(q)) ||
+                  (u.username && u.username.toLowerCase().includes(q));
+              })
+              .map(member => (
+                <div 
+                  key={member.id}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '0.75rem 1rem',
+                    background: 'rgba(255, 255, 255, 0.04)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    borderRadius: '10px',
+                    gap: '0.75rem'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '9px',
+                      background: member.role === 'NURSE' ? 'rgba(217, 27, 118, 0.2)' : 'rgba(6, 182, 212, 0.2)',
+                      border: member.role === 'NURSE' ? '1px solid var(--accent-magenta)' : '1px solid var(--accent-cyan)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontWeight: '800',
+                      color: member.role === 'NURSE' ? 'var(--accent-magenta)' : 'var(--accent-cyan)'
+                    }}>
+                      {member.fullName ? member.fullName.charAt(0).toUpperCase() : 'M'}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: '800', fontSize: '0.92rem', color: '#ffffff' }}>
+                        {member.fullName}
+                      </div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        @{member.username} · {member.email}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                    <span className={`badge ${member.role === 'NURSE' ? 'badge-purple' : 'badge-cyan'}`} style={{ fontSize: '0.68rem' }}>
+                      {member.role === 'NURSE' ? 'Junior Physio' : 'Patient'}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleMakeAdmin(member.id)}
+                      className="btn btn-cyan btn-sm"
+                      style={{ 
+                        background: 'linear-gradient(135deg, #fbbf24, #d97706)', 
+                        color: '#000000', 
+                        border: 'none', 
+                        fontWeight: '800',
+                        fontSize: '0.78rem',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.35rem'
+                      }}
+                    >
+                      <Crown size={13} />
+                      <span>Make Admin</span>
+                    </button>
+                  </div>
+                </div>
+              ))}
+
+            {eligibleUsers.length === 0 && (
+              <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>
+                All registered accounts already have Administrator access.
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="modal-footer" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'flex-end', paddingTop: '0.85rem' }}>
+          <button type="button" onClick={() => setIsMakeAdminModalOpen(false)} className="btn btn-secondary">Close</button>
+        </div>
+      </ModalOverlay>
+
+      {/* ========================================================= */}
+      {/* MODAL 10: DYNAMIC GRANULAR PERMISSIONS EDITOR             */}
+      {/* ========================================================= */}
+      <ModalOverlay
+        isOpen={isPermissionsModalOpen}
+        onClose={() => setIsPermissionsModalOpen(false)}
+        title={`Customize Permissions: ${targetStaffForPermissions?.fullName || 'Staff'}`}
+        subtitle="Toggle specific capabilities across Appointments, Patients, Nurses, Slots, Revenue & Audit"
+        icon={Settings}
+        iconColor="var(--accent-cyan)"
+        borderColor="var(--accent-cyan)"
+        maxWidth="750px"
+      >
+        <div className="modal-body" style={{ padding: '1rem 0', display: 'flex', flexDirection: 'column', gap: '1rem', maxHeight: '68vh', overflowY: 'auto' }}>
+          {/* Quick Presets */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', padding: '0.75rem', background: 'rgba(255, 255, 255, 0.04)', borderRadius: '8px' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--text-muted)' }}>Presets:</span>
+            <button
+              type="button"
+              onClick={() => setCustomPermissionsDraft(ROLE_PERMISSIONS.NURSE || [])}
+              className="btn btn-secondary btn-sm"
+              style={{ fontSize: '0.72rem', padding: '0.2rem 0.6rem' }}
+            >
+              🩺 Standard Nurse (6 perms)
+            </button>
+            <button
+              type="button"
+              onClick={() => setCustomPermissionsDraft(Object.values(PERMISSIONS))}
+              className="btn btn-secondary btn-sm"
+              style={{ fontSize: '0.72rem', padding: '0.2rem 0.6rem', color: '#fbbf24', borderColor: '#fbbf24' }}
+            >
+              👑 Full Admin (All 22 perms)
+            </button>
+            <button
+              type="button"
+              onClick={() => setCustomPermissionsDraft([])}
+              className="btn btn-secondary btn-sm"
+              style={{ fontSize: '0.72rem', padding: '0.2rem 0.6rem', color: '#f87171' }}
+            >
+              🧹 Clear All
+            </button>
+          </div>
+
+          {/* Grouped Permissions Breakdown */}
+          {[
+            {
+              group: "📅 Appointments & Scheduling",
+              perms: [
+                { id: PERMISSIONS.APPOINTMENTS_VIEW, label: "View Appointments" },
+                { id: PERMISSIONS.APPOINTMENTS_CREATE, label: "Create Appointments" },
+                { id: PERMISSIONS.APPOINTMENTS_MANAGE, label: "Manage Appointments" },
+                { id: PERMISSIONS.APPOINTMENTS_SET_STATUS, label: "Set Status (Confirmed / Completed)" },
+                { id: PERMISSIONS.APPOINTMENTS_SET_AMOUNT, label: "Set Consultation / Custom Fee" },
+                { id: PERMISSIONS.APPOINTMENTS_NURSE_NOTES, label: "Add Clinical Nurse Notes" },
+                { id: PERMISSIONS.APPOINTMENTS_CANCEL, label: "Cancel Appointments" },
+                { id: PERMISSIONS.APPOINTMENTS_DELETE, label: "Delete Records" }
+              ]
+            },
+            {
+              group: "👥 Patients & Clinical Records",
+              perms: [
+                { id: PERMISSIONS.PATIENTS_VIEW_ALL, label: "View Patient Directory" },
+                { id: PERMISSIONS.PATIENTS_VIEW_CLINICAL, label: "View Medical Charts & Conditions" },
+                { id: PERMISSIONS.PATIENTS_MANAGE, label: "Manage Patient Records" }
+              ]
+            },
+            {
+              group: "🩺 Nurse Station Staff Roster",
+              perms: [
+                { id: PERMISSIONS.NURSES_VIEW, label: "View Nurse Station Roster" },
+                { id: PERMISSIONS.NURSES_MANAGE, label: "Manage Nurse Staff & Credentials" }
+              ]
+            },
+            {
+              group: "⏰ Clinic Timings & Slots",
+              perms: [
+                { id: PERMISSIONS.TIMINGS_VIEW, label: "View Operating Slots" },
+                { id: PERMISSIONS.TIMINGS_MANAGE, label: "Add / Modify Clinic Slots" }
+              ]
+            },
+            {
+              group: "💳 Financial Reports, Income & Payments",
+              perms: [
+                { id: PERMISSIONS.PAYMENTS_INCOME_SUMMARY, label: "View Revenue & Income Portal" },
+                { id: PERMISSIONS.PAYMENTS_VIEW_ALL, label: "View All Payment Transactions" },
+                { id: PERMISSIONS.PAYMENTS_COLLECT, label: "Collect In-Clinic Cash Payments" },
+                { id: PERMISSIONS.PAYMENTS_PROCESS, label: "Process Refunds & Settlements" }
+              ]
+            },
+            {
+              group: "🛡️ System Governance & Audit",
+              perms: [
+                { id: PERMISSIONS.AUDIT_VIEW, label: "View Clinical Audit Trail Logs" }
+              ]
+            }
+          ].map(category => (
+            <div key={category.group} style={{ background: 'rgba(255, 255, 255, 0.03)', borderRadius: '10px', padding: '0.85rem', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+              <div style={{ fontWeight: '800', fontSize: '0.88rem', color: '#ffffff', marginBottom: '0.65rem' }}>
+                {category.group}
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '0.5rem' }}>
+                {category.perms.map(p => {
+                  const isChecked = customPermissionsDraft.includes(p.id);
+                  return (
+                    <label 
+                      key={p.id}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        padding: '0.45rem 0.65rem',
+                        borderRadius: '6px',
+                        background: isChecked ? 'rgba(6, 182, 212, 0.12)' : 'transparent',
+                        border: isChecked ? '1px solid var(--accent-cyan)' : '1px solid rgba(255, 255, 255, 0.06)',
+                        cursor: 'pointer',
+                        fontSize: '0.78rem',
+                        color: isChecked ? '#ffffff' : 'var(--text-muted)'
+                      }}
+                    >
+                      <input 
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => handleToggleSinglePermission(p.id)}
+                      />
+                      <span>{p.label}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="modal-footer" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '0.85rem' }}>
+          <span style={{ fontSize: '0.78rem', color: 'var(--accent-cyan)', fontWeight: '700' }}>
+            {customPermissionsDraft.length} capabilities selected
+          </span>
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button type="button" onClick={() => setIsPermissionsModalOpen(false)} className="btn btn-secondary">Cancel</button>
+            <button type="button" onClick={handleSaveCustomPermissions} className="btn btn-cyan" style={{ fontWeight: '800' }}>Save Dynamic Permissions</button>
+          </div>
+        </div>
+      </ModalOverlay>
+
+      {/* ========================================================= */}
+      {/* MODAL 11: DISMISS CO-ADMIN CONFIRMATION MODAL             */}
+      {/* ========================================================= */}
+      <ModalOverlay
+        isOpen={!!dismissConfirmAdmin}
+        onClose={() => setDismissConfirmAdmin(null)}
+        title="Dismiss as Administrator?"
+        subtitle={`Revert ${dismissConfirmAdmin?.fullName} back to regular member/nurse`}
+        icon={ShieldAlert}
+        iconColor="var(--accent-red)"
+        borderColor="var(--accent-red)"
+        maxWidth="500px"
+      >
+        <div className="modal-body" style={{ padding: '1rem 0', color: 'var(--text-muted)', fontSize: '0.88rem', lineHeight: '1.5' }}>
+          Are you sure you want to dismiss <strong>{dismissConfirmAdmin?.fullName}</strong> (@{dismissConfirmAdmin?.username}) as an Administrator?
+          <div style={{ marginTop: '0.75rem', padding: '0.75rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '8px', color: '#f87171', fontSize: '0.8rem' }}>
+            ⚠️ This will revoke their Co-Admin access immediately. They will revert to their previous role ({dismissConfirmAdmin?.previousRole || (dismissConfirmAdmin?.id?.startsWith('NURSE_') ? 'NURSE' : 'USER')}).
+          </div>
+        </div>
+        <div className="modal-footer" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', paddingTop: '0.85rem' }}>
+          <button type="button" onClick={() => setDismissConfirmAdmin(null)} className="btn btn-secondary">Cancel</button>
+          <button type="button" onClick={() => handleDismissAdmin(dismissConfirmAdmin)} className="btn btn-danger">Confirm Dismissal</button>
+        </div>
       </ModalOverlay>
 
       {/* MODAL 8: ADMIN BOOK PATIENT SLOT & SET FEE */}

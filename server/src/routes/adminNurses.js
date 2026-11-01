@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const { requireRole, requirePermission, PERMISSIONS, getPermissionsForRole } = require('../middleware/roles');
 const { getDB, saveDB, addAuditLog } = require('../db/store');
+
+// All nurse roster and operational management routes are restricted to Doctor / Admin
+router.use(requirePermission(PERMISSIONS.NURSES_MANAGE));
 
 // GET /api/admin/nurses - Fetch all nurses in the clinic roster
 router.get('/', (req, res) => {
@@ -249,6 +253,79 @@ router.delete('/:id', (req, res) => {
       nurse
     });
   }
+});
+
+
+// PATCH /api/admin/nurses/:id/access-level - Toggle between Standard and Full Admin Access
+router.patch('/:id/access-level', (req, res) => {
+  const db = getDB();
+  const { id } = req.params;
+  const nurse = db.users.find(u => u.id === id && u.role === 'NURSE');
+
+  if (!nurse) {
+    return res.status(404).json({ success: false, error: "Nurse record not found." });
+  }
+
+  const { accessLevel } = req.body;
+  const isFull = accessLevel === 'full';
+  nurse.accessLevel = isFull ? 'full' : 'standard';
+  nurse.isCoAdmin = isFull;
+  nurse.permissions = isFull ? Object.values(PERMISSIONS) : getPermissionsForRole('NURSE');
+
+  addAuditLog(
+    db, 
+    "Doctor/Admin", 
+    "Nurse Access Level Modified", 
+    `Nurse ${nurse.fullName} granted ${isFull ? 'Full Access (Same as Admin)' : 'Standard Clinical Access'}.`
+  );
+  saveDB(db);
+
+  res.json({
+    success: true,
+    message: `Nurse ${nurse.fullName} updated to ${isFull ? 'Full Admin Access' : 'Standard Clinical Access'}.`,
+    nurse: {
+      id: nurse.id,
+      fullName: nurse.fullName,
+      accessLevel: nurse.accessLevel,
+      isCoAdmin: nurse.isCoAdmin,
+      permissions: nurse.permissions
+    }
+  });
+});
+
+// PATCH /api/admin/nurses/:id/permissions - Dynamically customize permissions
+router.patch('/:id/permissions', (req, res) => {
+  const db = getDB();
+  const { id } = req.params;
+  const nurse = db.users.find(u => u.id === id && (u.role === 'NURSE' || u.role === 'USER'));
+
+  if (!nurse) {
+    return res.status(404).json({ success: false, error: "Staff member not found." });
+  }
+
+  const { permissions } = req.body;
+  if (!Array.isArray(permissions)) {
+    return res.status(400).json({ success: false, error: "Permissions must be an array of strings." });
+  }
+
+  nurse.permissions = permissions;
+  addAuditLog(
+    db, 
+    "Doctor/Admin", 
+    "Dynamic Permissions Updated", 
+    `Granular permissions customized for ${nurse.fullName} (${permissions.length} capabilities assigned).`
+  );
+  saveDB(db);
+
+  res.json({
+    success: true,
+    message: `Permissions successfully updated for ${nurse.fullName}.`,
+    nurse: {
+      id: nurse.id,
+      fullName: nurse.fullName,
+      permissions: nurse.permissions
+    }
+  });
 });
 
 module.exports = router;
